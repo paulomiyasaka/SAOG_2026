@@ -1,0 +1,16 @@
+{
+    "name": "81363826/saog",
+    "description": "Sistema de Apoio Operacional e Gestão",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Saog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Paulo R. Miyasaka"
+        }
+    ],
+    "require": {}
+}

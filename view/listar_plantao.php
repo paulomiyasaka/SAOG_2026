@@ -59,6 +59,12 @@ session_start();
 <?php
 $plantao = new plantao();
 include "barra_cima.php";
+$se = "CS";
+if(isset($_GET['se']) AND $_GET['se'] != ""){
+
+  $se = $_GET['se'];
+
+}
 
 ?>
   
@@ -72,16 +78,20 @@ include "barra_cima.php";
 
 	<div class="row justify-content-md-center">
 					<div class="col-sm-12 col-md-8 col-lg-6  align-self-center">
-					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+					<div class="pricing-header pt-md-5 pb-md-4 mx-auto text-center">
 				         
 			<h4 class="lead text-center"><p class="text-danger h3 text-center"><span class="h1">Atenção: </span></p> O colaborador deverá se inscrever com o<br>aval do seu gestor imediato.</h4>  
 			<button type="button" id="btn_info" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#info">
 				Informações e Procedimentos Operacionais
 			</button>
-			<h4 class="lead text-justify"><p class="text-center"><u>Entre em contato no caso de dúvidas:</u> <br></p>
-			<p class="text-center">Vanusa 	2141-8207 / 98242-7084 </p>
-			<p class="text-center">Hans   	2141-6644 / 99971-8635 </p>	
-				    </div>
+			<?php 
+			$pagina = $plantao->contatoDuvida($se);			
+			include_once "contatos/".$pagina;
+			
+			?>	
+				    
+		
+					</div>
 					</div>
 					</div>
 
@@ -141,8 +151,14 @@ include "barra_cima.php";
 			-->
 			<div class="row justify-content-md-center">
 			<div class="col-10 align-self-center">
-			<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-				<h1 class="display-4">Plantões disponíveis para inscrição:</h1> 
+			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+				<h1 class="display-4">Plantões disponíveis para inscrição:</h1>
+				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
+					<option disabled selected>Selecione</option>
+					<option value="bsb">BSB</option>
+					<option value="go">GO</option>
+					<option value="ce">CE</option>
+				</select> 
 		    </div>
 			</div>
 			</div>
@@ -153,7 +169,7 @@ include "barra_cima.php";
 		
 
 		<?php 
-		
+		$plantao->setSE($se);
 		$plantao->listarPlantao();
 		
 
@@ -177,11 +193,11 @@ include "barra_cima.php";
 						<div class="alert alert-warning" role="alert">
 													
 							<p class="lead text-center">Recomenda-se a leitura dos documentos abaixo:</p>
-							
-
 							<br>
+							<!--
 							<a class="btn btn-warning text-dark" href="../docs/MANDIS_MODULO_06_CAPITULO_001_Anexo_04.pdf" target="_blank" role="button"><b>MANDIS - MÓDULO 06 - CAPÍTULO 01 - Anexo 04</b></a>
 							<br><br>
+							-->
 							<a class="btn btn-warning text-dark" href="../docs/TLT_ENTREGA_OBJETO_POSTAL_CAPTURA_IMAGEM.pdf" target="_blank" role="button"><b>TLT - Entrega de Objeto Postal - Captura de Imagem</b></a>
 							<br><br>
 							<a class="btn btn-warning text-dark" href="../docs/TLT_SRO_MOVEL_PRESTACAO_CONTAS.pdf" target="_blank" role="button"><b>TLT - SRO Móvel - Prestação de Contas</b></a>

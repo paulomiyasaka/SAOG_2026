@@ -5,7 +5,7 @@ new auto_load();
 
 class login extends conecta{
 
-	protected $matricula, $senha;
+	protected $matricula, $senha, $se;
 
 	public function setMatricula($valor){
 		$this->matricula = $valor;
@@ -23,12 +23,20 @@ class login extends conecta{
 		return $this->senha;
 	}
 
+	public function setSE($valor){
+		$this->se = $valor;
+	}
+
+	public function getSE(){
+		return $this->se;
+	}
+
 
 	public function logar(){
 
 		$usuario = $this->getMatricula();
 
-		$sql = "SELECT matricula, nome, lotacao, funcao, telefone, celular FROM colaboradores WHERE matricula = :matricula AND status = :status";
+		$sql = "SELECT matricula, nome, lotacao, funcao, telefone, celular, se FROM colaboradores WHERE matricula = :matricula AND status = :status";
 		$dados = array(":matricula" => $usuario, ":status" => 1);
 
 		$query = conecta::executarSQL($sql, $dados);

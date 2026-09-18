@@ -19,8 +19,8 @@ session_start();
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
   <script src="../js/jquery-3.3.1.min.js"></script>
@@ -61,14 +61,33 @@ session_start();
 <?php
 $plantao = new plantao();
 include "barra_cima.php";
+$se = "CS";
+if(isset($_GET['se']) AND $_GET['se'] != ""){
+  $se = $_GET['se'];
+}
 ?>
   
 
 	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-10 align-self-center">
+			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+				<h1 class="display-4">Plantões disponíveis para inscrição:</h1>
+				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
+					<option disabled selected>Selecione</option>
+					<option value="bsb">BSB</option>
+					<option value="go">GO</option>
+					<option value="ce">CE</option>
+				</select> 
+		    </div>
+			</div>
+			</div>
+
 		<?php
 			
 		$plantao->botaoCadastrarPlantao();
 		
+		$plantao->setSE($se);
 		$plantao->listarPlantaoAdministrador();
 		
 
@@ -247,6 +266,40 @@ include "barra_cima.php";
 			<label for="nome_unidade">Nome da Unidade:</label>
 			<input type="text" name="nome_unidade" class="form-control" id="nome_unidade" placeholder="Nome da Unidade">
 		  </div>
+		  <div class="form-group">
+		  <label for="se">SE:</label>
+		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%">
+			<option value="0" selected>Selecionar</option>
+			<option value="SE/ACR">SE/ACR</option>
+			<option value="SE/AL">SE/AL</option>
+			<option value="SE/AM">SE/AM</option>
+			<option value="SE/AP">SE/AP</option>
+			<option value="SE/BA">SE/BA</option>
+  			<option value="SE/BSB">SE/BSB</option>
+			<option value="SE/CE">SE/CE</option>
+			<option value="SE/ES">SE/ES</option>
+  			<option value="SE/GO">SE/GO</option>
+			<option value="SE/MA">SE/MA</option>
+			<option value="SE/MG">SE/MG</option>
+			<option value="SE/MS">SE/MS</option>
+			<option value="SE/MT">SE/MT</option>
+			<option value="SE/PA">SE/PA</option>
+			<option value="SE/PB">SE/PB</option>
+			<option value="SE/PE">SE/PE</option>
+			<option value="SE/PI">SE/PI</option>
+			<option value="SE/PR">SE/PR</option>
+			<option value="SE/RJ">SE/RJ</option>
+			<option value="SE/RN">SE/RN</option>
+			<option value="SE/RO">SE/RO</option>
+			<option value="SE/RR">SE/RR</option>
+			<option value="SE/RS">SE/RS</option>
+			<option value="SE/SC">SE/SC</option>
+			<option value="SE/SE">SE/SE</option>
+  			<option value="SE/SPI">SE/SPI</option>
+  			<option value="SE/SPM">SE/SPM</option>
+			<option value="SE/TO">SE/TO</option>
+		  </select>
+			</div>
 		  
 		  <div class="input-group mb-3">
 		  <div class="input-group-prepend">
@@ -257,6 +310,7 @@ include "barra_cima.php";
 			<option value="Tratamento">Tratamento</option>
 			<option value="Distribuicao">Distribuição</option>
 		  </select>
+
 		</div>
 		  
 		  <div class="form-group">
@@ -354,6 +408,7 @@ include "barra_cima.php";
 				
 			<?php
 				$plantao = new plantao();
+				$plantao->setSE($se);
 				$plantao->listarUnidadesPlantao();				
 			?> 
 			  </select>

@@ -12,11 +12,14 @@ if(isset($_REQUEST['acao'])){
 	
 	
 	if($acao == "cadastrar"){
-		$ddd = "61";
+		
 		$unidades = new unidades();
 		
 		if(isset($_REQUEST['nome'])){
 			$unidades->setNome($_REQUEST['nome']);
+		}
+		if(isset($_REQUEST['se'])){
+			$unidades->setSE($_REQUEST['se']);
 		}		
 		if(isset($_REQUEST['tipo_trabalho'])){
 			$unidades->setTrabalho($_REQUEST['tipo_trabalho']);
@@ -35,14 +38,14 @@ if(isset($_REQUEST['acao'])){
 			$unidades->setMatricula($_REQUEST['matricula_gerente']);
 		}
 		if(isset($_REQUEST['tel_gerente'])){
-			$unidades->setTelGerente($ddd.$_REQUEST['tel_gerente']);
+			$unidades->setTelGerente($_REQUEST['tel_gerente']);
 		}
 		if(isset($_REQUEST['tel_centro1'])){
-			$unidades->setTelCentro1($ddd.$_REQUEST['tel_centro1']);
+			$unidades->setTelCentro1($_REQUEST['tel_centro1']);
 		}
 
 		if(isset($_REQUEST['tel_centro2'])){
-			$unidades->setTelCentro2($ddd.$_REQUEST['tel_centro2']);
+			$unidades->setTelCentro2($_REQUEST['tel_centro2']);
 		}
 	
 		$cadastrar = $unidades->cadastrarUnidades();

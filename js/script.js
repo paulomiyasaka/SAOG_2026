@@ -16,8 +16,8 @@ $(document).ready(function(){
 	$("#matricula_login").mask('0.000.000-0');
 	$("#matricula_gerente").mask('0.000.000-0');
 	$("#tel_gerente").mask('(00) 00000-0000');
-	$("#tel_centro1").mask('0000-0000');
-	$("#tel_centro2").mask('0000-0000');
+	$("#tel_centro1").mask('(00) 0000-0000');
+	$("#tel_centro2").mask('(00) 0000-0000');
 	$("#data_inicio").mask('00/00/0000');
 	$("#data_final").mask('00/00/0000');
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	$("#telefone_tratamento").mask('0000-0000');
 	$("#celular_tratamento").mask('00000-0000');
 	$("#telefone_motorista").mask('0000-0000');
-	$("#celular_motorista").mask('	00000-0000');
+	$("#celular_motorista").mask('00000-0000');
 	
 
 	if (typeof(Storage) !== 'undefined') {
@@ -96,6 +96,7 @@ function cadastrarUnidade(){
 	//loading();
 
 		var nome = $("#nome_unidade").val();
+		var se = $("#se").val();
 		var trabalho = $("#tipo_trabalho").val();
 		var endereco = $("#endereco").val();
 		var url = $("#url").val();
@@ -111,6 +112,7 @@ function cadastrarUnidade(){
 		$.ajax({url: "unidades.php", 
 				data: {	
 						nome:nome, 
+						se:se,
 						tipo_trabalho:trabalho, 
 						endereco:endereco, 
 						url:url, 
@@ -350,11 +352,12 @@ function logaradm(){
 
 function setStorageAdm(){
 	
-	var matricula = localStorage.getItem('matricula');	
+	var matricula = localStorage.getItem('matricula');
+	var se = localStorage.getItem('se');	
 	var time = new Date();
 	time = time.getTime();
 	localStorage.setItem("time", time);
-	window.location.href = "plantao.php?acao=listar&matricula="+matricula;
+	window.location.href = "plantao.php?acao=listar&matricula="+matricula+"&se="+se;
 
 }
 
@@ -428,15 +431,24 @@ function setStorage(retorno_array){
 		celular = celular.replace(celular.substring(tamanho-2,tamanho-1),"");
 		
 	}
+
+	localStorage.setItem("celular", celular);
+
+	r = retorno_array[6].split(':');			    		
+	var se = r[1];		
+		se = se.replace('"',"");
+		se = se.replace('}',"");
+		se = se.replace('"',"");
+		se = se.replace(']',"");
 	
 	//alert("cel: "+celular);
-	localStorage.setItem("celular", celular);
+	localStorage.setItem("se", se);
 
 
 	var time = new Date();
 	time = time.getTime();
 	localStorage.setItem("time", time);
-	window.location.href = "sistema/plantao.php?acao=listar&matricula="+matricula;
+	window.location.href = "sistema/plantao.php?acao=listar&matricula="+matricula+"&se="+se;
 
 }
 
@@ -1316,6 +1328,18 @@ function criarSenha(){
 }else{
 	$('#modalCadastroError').modal('show');
 }
+
+
+}
+
+
+
+function buscarPlantaoSE()
+{
+
+	se = document.getElementById('selecionarSE').value;
+	//alert(se);
+	window.location.href = "listar_plantao.php?se="+se;
 
 
 }

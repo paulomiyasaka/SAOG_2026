@@ -95,6 +95,7 @@ echo "<script>window.location.href='navegador.php'</script>";
   <br>
 <br>
 <br>
+<!--
   <div class="row">
     <div class="col">
       <p class="h5 text-muted">Desenvolvido por:<br>
@@ -102,7 +103,7 @@ echo "<script>window.location.href='navegador.php'</script>";
       </p>
     </div>
   </div>
-
+-->
 
 </div>
   </body>

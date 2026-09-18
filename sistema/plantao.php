@@ -16,6 +16,7 @@ if(isset($_REQUEST['acao'])){
 	$vagas = "";
 	
 	
+	
 	if($acao == "cadastrar"){
 		$plantao = new plantao();
 		
@@ -51,14 +52,22 @@ if(isset($_REQUEST['acao'])){
 		//LISTAR PLANTÕES
 	}else if($acao == "listar"){
 
+	
+
 		$matricula = NULL;
+		$se = NULL;
 
 		if(isset($_REQUEST['matricula'])){
 			$matricula = $_REQUEST['matricula'];
 		}
+		if(isset($_REQUEST['se'])){
+			$se = $_REQUEST['se'];
+		}	
+
 		session_start();
 		$_SESSION['matricula'] = $matricula;
-		echo "<script>window.location.href='../view/listar_plantao.php';</script>";
+		
+		echo "<script>window.location.href=\"../view/listar_plantao.php?se=".$se."\";</script>;";
 	
 
 

@@ -4,13 +4,20 @@ new auto_load();
 
 class unidades extends conecta{
 
-	protected $nome, $trabalho, $endereco, $gerente, $matricula, $tel_gerente, $tel_centro1, $tel_centro2, $url;
+	protected $nome, $trabalho, $se, $endereco, $gerente, $matricula, $tel_gerente, $tel_centro1, $tel_centro2, $url;
 	
 	public function setNome($value){
 		$this->nome = $value;
 	}
 	public function getNome(){
 		return $this->nome;
+	}
+
+	public function setSE($value){
+		$this->se = $value;
+	}
+	public function getSE(){
+		return $this->se;
 	}
 	
 	public function setTrabalho($value){
@@ -95,6 +102,7 @@ class unidades extends conecta{
 	public function cadastrarUnidades(){
 		$funcao = new funcoes();
 		$nome = strtoupper($this->getNome());
+		$se = strtoupper($this->getSE());
 		$trabalho = strtolower($this->getTrabalho());
 		$endereco = strtoupper($this->getEndereco());
 		$gerente = strtoupper($this->getGerente());
@@ -105,8 +113,8 @@ class unidades extends conecta{
 		$tel_centro2 = $funcao->somenteNumero($this->getTelCentro2());
 
 
-		$sql = "INSERT INTO unidades (nome, trabalho, endereco, url, gerente, matricula, tel_gerente, tel_centro1, tel_centro2) VALUES (:nome, :trabalho, :endereco, :url, :gerente, :matricula, :tel_gerente, :tel_centro1, :tel_centro2)";
-		$dados = array(":nome" => $nome, ":trabalho" => $trabalho, ":endereco" => $endereco, ":url" => $url, ":gerente" => $gerente, ":matricula" => $matricula, ":tel_gerente" => $tel_gerente, ":tel_centro1" => $tel_centro1, ":tel_centro2" => $tel_centro2);
+		$sql = "INSERT INTO unidades (nome, se, trabalho, endereco, url, gerente, matricula, tel_gerente, tel_centro1, tel_centro2) VALUES (:nome, :se, :trabalho, :endereco, :url, :gerente, :matricula, :tel_gerente, :tel_centro1, :tel_centro2)";
+		$dados = array(":nome" => $nome, ":se" => $se, ":trabalho" => $trabalho, ":endereco" => $endereco, ":url" => $url, ":gerente" => $gerente, ":matricula" => $matricula, ":tel_gerente" => $tel_gerente, ":tel_centro1" => $tel_centro1, ":tel_centro2" => $tel_centro2);
 
 		$query = conecta::executarSQL($sql, $dados);
 		$resultado = conecta::lastidSQL();

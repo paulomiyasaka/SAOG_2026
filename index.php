@@ -6,6 +6,7 @@
 
     <title>SAOG</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="author" content="Paulo R. Miyasaka - 8.136.382-6">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">  
   <link rel="stylesheet" href="css/style.css" rel="stylesheet">
@@ -54,12 +55,8 @@ echo "<script>window.location.href='navegador.php'</script>";
             </button>
           </div>
           <div class="modal-body">
-            <h4 class="text-center">A matrícula informada não foi encontrada.</h4>
-            <hr>
-            <h5 class="text-dark"><b>Problema com acesso?</b></h5>
-            <h5 class="text-dark"><b>Envie um e-mail para a GEOPE</b></h5>
-            <h5 class="text-dark">Informe sua Matrícula, Nome Completo e Unidade de Lotação</h5>         
-            <a href="mailto:geope-bsb2@correios.com.br" class="mt-5 mb-3 text-dark">BSB - SE - GEOPE - Caixa Postal</a> 
+            <h5 class="text-center">A matrícula informada não foi encontrada.</h5>
+            <h5 class="text-dark"><b>Entre em contato com a Gerência Regional para habilitar o acesso.</b></h5>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
@@ -89,7 +86,7 @@ echo "<script>window.location.href='navegador.php'</script>";
   <div class="row">
     <div class="col">
       <p class="h5 text-dark">Desenvolvido por:<br>
-        <b>Paulo Rodrigues Miyasaka - SE/BSB/GEOPE</b>
+        <b>Paulo Rodrigues Miyasaka - 8.136.382-6</b>
       </p>
     </div>
   </div>

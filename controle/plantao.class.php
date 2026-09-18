@@ -4,13 +4,20 @@ new auto_load();
 
 class plantao extends conecta{
 
-	protected $id_plantao, $id_unidade, $nome_unidade, $data_inicio, $data_final, $hora_inicio, $hora_final, $vagas, $tipo_trabalho, $motorista;
+	protected $id_plantao, $se, $id_unidade, $nome_unidade, $data_inicio, $data_final, $hora_inicio, $hora_final, $vagas, $tipo_trabalho, $motorista;
 	
 	public function setIdPlantao($valor){
 		$this->id_plantao = $valor;		
 	}	
 	public function getIdPlantao(){
 		return $this->id_plantao;		
+	}
+
+	public function setSE($valor){
+		$this->se = $valor;		
+	}	
+	public function getSE(){
+		return $this->se;		
 	}
 
 
@@ -157,7 +164,7 @@ class plantao extends conecta{
 
 	//alterar plantão
 	public function alterarPlantao(){
-		date_timezone_set('America/Sao_Paulo');
+		date_default_timezone_set('America/Sao_Paulo');
 		$funcoes = new funcoes();
 		
 		$id_plantao = (int) $this->getIdPlantao();
@@ -418,9 +425,21 @@ class plantao extends conecta{
 		//listar plantões disponíveis
 	public function listarPlantaoAdministrador(){
 
+		$se = $this->getSE();
 		date_default_timezone_set('America/Sao_Paulo');
-		$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status ORDER BY p.turno_inicio ASC";
-		$dados = array(":status" => 1);
+
+		$sql = "";
+		$dados = array();
+
+		if($se == "CS" || $se == "TODAS" || $se == "" || $se == NULL){
+			$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status ORDER BY p.turno_inicio ASC";
+			$dados = array(":status" => 1);
+		}else{
+			$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status AND u.se = :se ORDER BY p.turno_inicio ASC";
+			$dados = array(":status" => 1, ":se" => "SE/".$se);
+		}
+
+		
 		$query = conecta::executarSQL($sql, $dados);
 		$resultado = $query->fetchAll(PDO::FETCH_OBJ);
 		$quant = $query->rowCount();
@@ -493,9 +512,9 @@ class plantao extends conecta{
 
 			echo "<h4 class=\"card-text text-center\">".$data."</h4><br>
 			    <h5 class=\"card-text text-left\"><b>Gerente:</b> ".ucwords(strtolower($row->gerente))."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (61) ".substr($row->tel_gerente, 2, 5)."-".substr($row->tel_gerente, 7, 4)."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> ".substr($row->tel_centro1, 0, 4)."-".substr($row->tel_centro1, 4, 7)."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> ".substr($row->tel_centro2, 0, 4)."-".substr($row->tel_centro2, 4, 7)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_gerente, 0, 2).") ".substr($row->tel_gerente, 2, 5)."-".substr($row->tel_gerente, 7, 4)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_centro1, 0, 2).") ".substr($row->tel_centro1, 2, 4)."-".substr($row->tel_centro1, 6, 4)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_centro2, 0, 2).") ".substr($row->tel_centro2, 2, 4)."-".substr($row->tel_centro2, 6, 4)."</h5>
 			    <hr>";
 			
 
@@ -607,7 +626,7 @@ class plantao extends conecta{
 			echo "<br><br><br><br><br>";
 	
 		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos</h1></div>";
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1></div>";
 
 		}
 
@@ -622,9 +641,20 @@ class plantao extends conecta{
 	//listar plantões disponíveis
 	public function listarPlantao(){
 
+		$se = $this->getSE();
 		date_default_timezone_set('America/Sao_Paulo');
-		$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status ORDER BY p.turno_inicio ASC";
-		$dados = array(":status" => 1);
+
+		$sql = "";
+		$dados = array();
+
+		if($se == "CS" || $se == "TODAS" || $se == "" || $se == NULL){
+			$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status ORDER BY p.turno_inicio ASC";
+			$dados = array(":status" => 1);
+		}else{
+			$sql = "SELECT p.*, u.* FROM plantao as p INNER JOIN unidades as u ON p.id_unidade = u.id_unidade AND p.turno_final > now() WHERE p.status = :status AND u.se = :se ORDER BY p.turno_inicio ASC";
+			$dados = array(":status" => 1, ":se" => "SE/".$se);
+		}
+
 		$query = conecta::executarSQL($sql, $dados);
 		$resultado = $query->fetchAll(PDO::FETCH_OBJ);
 		$quant = $query->rowCount();
@@ -698,9 +728,9 @@ class plantao extends conecta{
 
 			echo "<h4 class=\"card-text text-center\">".$data."</h4><br>
 			    <h5 class=\"card-text text-left\"><b>Gerente:</b> ".ucwords(strtolower($row->gerente))."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (61) ".substr($row->tel_gerente, 2, 5)."-".substr($row->tel_gerente, 7, 4)."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> ".substr($row->tel_centro1, 0, 4)."-".substr($row->tel_centro1, 4, 7)."</h5>
-			    <h5 class=\"card-text text-left\"><b>Telefone:</b> ".substr($row->tel_centro2, 0, 4)."-".substr($row->tel_centro2, 4, 7)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_gerente, 0, 2).") ".substr($row->tel_gerente, 2, 5)."-".substr($row->tel_gerente, 7, 4)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_centro1, 0, 2).") ".substr($row->tel_centro1, 2, 4)."-".substr($row->tel_centro1, 6, 4)."</h5>
+			    <h5 class=\"card-text text-left\"><b>Telefone:</b> (".substr($row->tel_centro2, 0, 2).") ".substr($row->tel_centro2, 2, 4)."-".substr($row->tel_centro2, 6, 4)."</h5>
 			    <hr>";
 			
 
@@ -796,7 +826,7 @@ class plantao extends conecta{
 			echo "<br><br><br><br><br>";
 	
 		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos</h1></div>";
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1></div>";
 
 		}
 
@@ -2007,7 +2037,19 @@ public function verInscritosPassado($id_plantao){
 	}
 
 
+	public function contatoDuvida($se)
+	{	
+		$pagina = "cs.html";
+		switch($se){
+			case 'BSB': $pagina = "bsb.html";
+			break;
 
+			default: $pagina = "cs.html";
+
+		}
+
+		return $pagina;
+	}
 	
 
 
