@@ -1,0 +1,1 @@
+SELECT c.matricula, c.nome, c.lotacao, c.funcao, u.nome, p.turno_inicio FROM colaboradores AS c INNER JOIN (cadastrados AS cad, plantao AS p, unidades AS u) ON c.id_colaborador = cad.id_colaborador AND p.id_plantao = cad.id_plantao AND u.id_unidade = p.id_unidade WHERE p.turno_inicio > now() GROUP BY c.nome, p.turno_inicio ORDER BY p.turno_inicio ASC, c.nome ASC
