@@ -23,32 +23,12 @@ session_start();
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
-  <script src="../js/jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-  <script src="../js/script.js"></script>
+
  
 
 
  
-  <script>
-    $(document).ready(function(){
 
-      if (typeof(Storage) !== 'undefined') {
-        if(localStorage.getItem("matricula") == null){        
-          //alert(localStorage.getItem("nome"));
-          window.location.href = "../index.php";
-        }
-      }else {
-        alert('Utilize um destes navegadores: Google Chrome ou Mozilla Firefox.');
-      }
-
-    });
-    
-
-    
-  
-  </script>
   
   </head>
 
@@ -85,8 +65,8 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				Informações e Procedimentos Operacionais
 			</button>
 			<?php 
-			$pagina = $plantao->contatoDuvida($se);			
-			include_once "contatos/".$pagina;
+			//$pagina = $plantao->contatoDuvida($se);			
+			//include_once "contatos/".$pagina;
 			
 			?>	
 				    
@@ -152,12 +132,37 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			<div class="row justify-content-md-center">
 			<div class="col-10 align-self-center">
 			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-				<h1 class="display-4">Plantões disponíveis para inscrição:</h1>
+				<h1 class="display-4">Verifique os plantões disponíveis para inscrição selecionando uma SE:</h1>
 				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
 					<option disabled selected>Selecione</option>
-					<option value="bsb">BSB</option>
-					<option value="go">GO</option>
-					<option value="ce">CE</option>
+					<option value="ACR">SE/ACR</option>
+					<option value="AL">SE/AL</option>
+					<option value="AM">SE/AM</option>
+					<option value="AP">SE/AP</option>
+					<option value="BA">SE/BA</option>
+					<option value="BSB">SE/BSB</option>
+					<option value="CE">SE/CE</option>
+					<option value="ES">SE/ES</option>
+					<option value="GO">SE/GO</option>
+					<option value="MA">SE/MA</option>
+					<option value="MG">SE/MG</option>
+					<option value="MS">SE/MS</option>
+					<option value="MT">SE/MT</option>
+					<option value="PA">SE/PA</option>
+					<option value="PB">SE/PB</option>
+					<option value="PE">SE/PE</option>
+					<option value="PI">SE/PI</option>
+					<option value="PR">SE/PR</option>
+					<option value="RJ">SE/RJ</option>
+					<option value="RN">SE/RN</option>
+					<option value="RO">SE/RO</option>
+					<option value="RR">SE/RR</option>
+					<option value="RS">SE/RS</option>
+					<option value="SC">SE/SC</option>
+					<option value="SE">SE/SE</option>
+					<option value="SPI">SE/SPI</option>
+					<option value="SPM">SE/SPM</option>
+					<option value="TO">SE/TO</option>
 				</select> 
 		    </div>
 			</div>
@@ -201,7 +206,12 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 							<a class="btn btn-warning text-dark" href="../docs/TLT_ENTREGA_OBJETO_POSTAL_CAPTURA_IMAGEM.pdf" target="_blank" role="button"><b>TLT - Entrega de Objeto Postal - Captura de Imagem</b></a>
 							<br><br>
 							<a class="btn btn-warning text-dark" href="../docs/TLT_SRO_MOVEL_PRESTACAO_CONTAS.pdf" target="_blank" role="button"><b>TLT - SRO Móvel - Prestação de Contas</b></a>
-						  
+  							<br><br>
+							<?php 
+								$pagina = $plantao->contatoDuvida($se);			
+								include "contatos/".$pagina;
+								
+							?>
 
 						</div>
 				    </div>
@@ -246,11 +256,11 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 					-->
 					  <div class="form-group">
 						<label for="telefone_motorista">Telefone da Seção/Unidade:</label>
-						<input type="text" class="form-control" id="telefone_motorista" placeholder="0000-0000" onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<input type="text" class="form-control" id="telefone_motorista" placeholder="(00) 0000-0000" onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_motorista">Celular: (61)</label>
-						<input type="text" class="form-control" id="celular_motorista" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<label for="celular_motorista">Celular:</label>
+						<input type="text" class="form-control" id="celular_motorista" placeholder="(00) 00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
   
   
@@ -520,7 +530,27 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		</div>
 	
 	</div>
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+  <script src="../js/script.js"></script>
 
+  <script>
+	  
+    $(document).ready(function(){
+
+      if (typeof(Storage) !== 'undefined') {
+        if(localStorage.getItem("matricula") == null){        
+          //alert(localStorage.getItem("nome"));
+          window.location.href = "../index.php";
+        }
+      }else {
+        alert('Utilize um destes navegadores: Google Chrome ou Mozilla Firefox.');
+      }
+
+    });  
+  
+  </script>
 	
 </body>
 </html>

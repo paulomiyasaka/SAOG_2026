@@ -26,10 +26,10 @@ $(document).ready(function(){
 	$("[horario3]").mask('00:00');
 	$("[horario4]").mask('00:00');
 
-	$("#telefone_tratamento").mask('0000-0000');
-	$("#celular_tratamento").mask('00000-0000');
-	$("#telefone_motorista").mask('0000-0000');
-	$("#celular_motorista").mask('00000-0000');
+	$("#telefone_tratamento").mask('(00) 0000-0000');
+	$("#celular_tratamento").mask('(00) 00000-0000');
+	$("#telefone_motorista").mask('(00) 0000-0000');
+	$("#celular_motorista").mask('(00) 00000-0000');
 	
 
 	if (typeof(Storage) !== 'undefined') {
@@ -840,7 +840,29 @@ function editarPlantao(){
 			success: function(result,status){
 				//alert(typeof(result)+ " " +result);
 				loadingFinish();  	 
-				window.location.reload();
+				//window.location.reload();
+				//var retorno = '['+ result + ']'; 
+				//var j = '{"dados":' + result + '}';
+
+				//var r = retorno.split(':');			    		
+				//var resultado = r[1];
+				//var tamanho = resultado.length;
+				//resultado = resultado.replace(resultado.substring(0,1),"");
+				
+				//tamanho = resultado.length;
+				resultado = result;
+				loadingFinish();  	 
+				if(resultado == 'true'){   	 		
+	    		
+	    			
+					$("#modalCadastroOK").modal('show');
+					alert(typeof(result)+ " " +result);
+					//window.location.reload();
+	    		}else{
+	    				 
+	    			$("#modalCadastroError").modal('show');
+	    		}
+
 				/*	    		
 				var resultado = result;
 				

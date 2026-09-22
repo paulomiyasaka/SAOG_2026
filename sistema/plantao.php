@@ -411,7 +411,7 @@ if(isset($_REQUEST['acao'])){
 		}
 		
 		$alterar = $plantao->alterarPlantao();
-		/*
+		
 		$retorno = "";
 		if($alterar){	
 			$retorno = "{'resultado':'true'}";						
@@ -419,9 +419,9 @@ if(isset($_REQUEST['acao'])){
 			$retorno = "{'resultado':'false'}";			
 		}
 
-		*/
-		//var_dump(json_encode($alterar));
-		echo 	json_encode($alterar);
+		
+		//var_dump(json_encode($retorno));
+		echo json_encode($retorno);
 
 
 	}

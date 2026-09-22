@@ -10,7 +10,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "-03:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -70,8 +70,8 @@ CREATE TABLE `colaboradores` (
   `especialidade` varchar(100) DEFAULT NULL,
   `funcao` varchar(100) DEFAULT NULL,
   `localizacao` varchar(100) DEFAULT NULL,
-  `uf` char(2) DEFAULT NULL,
   `situacao` varchar(255) DEFAULT 'ATIVO',
+  `uf` char(2) DEFAULT NULL,  
   `telefone` varchar(9) DEFAULT NULL,
   `celular` varchar(11) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
@@ -166,7 +166,8 @@ CREATE TABLE `presenca` (
 
 CREATE TABLE `unidades` (
   `id_unidade` int(11) NOT NULL,
-  `nome` varchar(50)NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `se` varchar(10) NOT NULL,
   `trabalho` varchar(50) NOT NULL DEFAULT 'Distribuicao',
   `endereco` varchar(100) NOT NULL,
   `gerente` varchar(150) NOT NULL,

@@ -624,10 +624,15 @@ class plantao extends conecta{
 			
 			echo "</div>";
 			echo "<br><br><br><br><br>";
-	
-		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1></div>";
+		
+			//se não tiver plantão cadastrado
+		}else if($se == "CS"){
+			
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para o ".strtoupper($se).".</h1>";
+			echo "<h1 class=\"display-4\">Selecione uma Superintendência.</h1></div></div>";
 
+		}else{
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1>";
 		}
 
 
@@ -824,10 +829,16 @@ class plantao extends conecta{
 			
 			echo "</div>";
 			echo "<br><br><br><br><br>";
-	
-		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1></div>";
 
+
+			//se não tiver plantão cadastrado
+		}else if($se == "CS"){
+			
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para o ".strtoupper($se).".</h1>";
+			echo "<h1 class=\"display-4\">Selecione uma Superintendência.</h1></div></div>";
+
+		}else{
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1>";
 		}
 
 

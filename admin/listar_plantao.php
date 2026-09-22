@@ -75,9 +75,34 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				<h1 class="display-4">Plantões disponíveis para inscrição:</h1>
 				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
 					<option disabled selected>Selecione</option>
-					<option value="bsb">BSB</option>
-					<option value="go">GO</option>
-					<option value="ce">CE</option>
+					<option value="ACR">SE/ACR</option>
+					<option value="AL">SE/AL</option>
+					<option value="AM">SE/AM</option>
+					<option value="AP">SE/AP</option>
+					<option value="BA">SE/BA</option>
+					<option value="BSB">SE/BSB</option>
+					<option value="CE">SE/CE</option>
+					<option value="ES">SE/ES</option>
+					<option value="GO">SE/GO</option>
+					<option value="MA">SE/MA</option>
+					<option value="MG">SE/MG</option>
+					<option value="MS">SE/MS</option>
+					<option value="MT">SE/MT</option>
+					<option value="PA">SE/PA</option>
+					<option value="PB">SE/PB</option>
+					<option value="PE">SE/PE</option>
+					<option value="PI">SE/PI</option>
+					<option value="PR">SE/PR</option>
+					<option value="RJ">SE/RJ</option>
+					<option value="RN">SE/RN</option>
+					<option value="RO">SE/RO</option>
+					<option value="RR">SE/RR</option>
+					<option value="RS">SE/RS</option>
+					<option value="SC">SE/SC</option>
+					<option value="SE">SE/SE</option>
+					<option value="SPI">SE/SPI</option>
+					<option value="SPM">SE/SPM</option>
+					<option value="TO">SE/TO</option>
 				</select> 
 		    </div>
 			</div>
@@ -270,34 +295,35 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		  <label for="se">SE:</label>
 		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%">
 			<option value="0" selected>Selecionar</option>
-			<option value="SE/ACR">SE/ACR</option>
-			<option value="SE/AL">SE/AL</option>
-			<option value="SE/AM">SE/AM</option>
-			<option value="SE/AP">SE/AP</option>
-			<option value="SE/BA">SE/BA</option>
-  			<option value="SE/BSB">SE/BSB</option>
-			<option value="SE/CE">SE/CE</option>
-			<option value="SE/ES">SE/ES</option>
-  			<option value="SE/GO">SE/GO</option>
-			<option value="SE/MA">SE/MA</option>
-			<option value="SE/MG">SE/MG</option>
-			<option value="SE/MS">SE/MS</option>
-			<option value="SE/MT">SE/MT</option>
-			<option value="SE/PA">SE/PA</option>
-			<option value="SE/PB">SE/PB</option>
-			<option value="SE/PE">SE/PE</option>
-			<option value="SE/PI">SE/PI</option>
-			<option value="SE/PR">SE/PR</option>
-			<option value="SE/RJ">SE/RJ</option>
-			<option value="SE/RN">SE/RN</option>
-			<option value="SE/RO">SE/RO</option>
-			<option value="SE/RR">SE/RR</option>
-			<option value="SE/RS">SE/RS</option>
-			<option value="SE/SC">SE/SC</option>
-			<option value="SE/SE">SE/SE</option>
-  			<option value="SE/SPI">SE/SPI</option>
-  			<option value="SE/SPM">SE/SPM</option>
-			<option value="SE/TO">SE/TO</option>
+			<option disabled selected>Selecione</option>
+				<option value="ACR">SE/ACR</option>
+				<option value="AL">SE/AL</option>
+				<option value="AM">SE/AM</option>
+				<option value="AP">SE/AP</option>
+				<option value="BA">SE/BA</option>
+				<option value="BSB">SE/BSB</option>
+				<option value="CE">SE/CE</option>
+				<option value="ES">SE/ES</option>
+				<option value="GO">SE/GO</option>
+				<option value="MA">SE/MA</option>
+				<option value="MG">SE/MG</option>
+				<option value="MS">SE/MS</option>
+				<option value="MT">SE/MT</option>
+				<option value="PA">SE/PA</option>
+				<option value="PB">SE/PB</option>
+				<option value="PE">SE/PE</option>
+				<option value="PI">SE/PI</option>
+				<option value="PR">SE/PR</option>
+				<option value="RJ">SE/RJ</option>
+				<option value="RN">SE/RN</option>
+				<option value="RO">SE/RO</option>
+				<option value="RR">SE/RR</option>
+				<option value="RS">SE/RS</option>
+				<option value="SC">SE/SC</option>
+				<option value="SE">SE/SE</option>
+				<option value="SPI">SE/SPI</option>
+				<option value="SPM">SE/SPM</option>
+				<option value="TO">SE/TO</option>
 		  </select>
 			</div>
 		  
