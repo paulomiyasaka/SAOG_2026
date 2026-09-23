@@ -700,10 +700,6 @@ class plantao extends conecta{
 			  <div class=\"card-body border border-dark\">
 			  	<div class=\"alert alert-secondary\" role=\"alert\">";
 
-			  	echo "<a href='".$localizacao."' target='_blank' data-toggle=\"tooltip\" data-html=\"true\" title=\"Clique para visualizar no mapa.\"><h3 class=\"card-title\"><i class=\"material-icons float-left btn-outline-danger\" style=\"cursor: pointer;\">room</i></a>";
-
-
-			  				
 			  	$centro = explode(" ", $row->nome);
 				$trabalho = "Tratamento";
 				if($centro[0] == "CEE" || $centro[0] == "CDD" || $centro[0] == "UD" ){
@@ -714,6 +710,7 @@ class plantao extends conecta{
 				$localizacao = $row->url;
 
 				if($localizacao != "" && $localizacao != null){
+					echo "<a href='".$localizacao."' target='_blank' data-toggle=\"tooltip\" data-html=\"true\" title=\"Clique para visualizar no mapa.\"><h3 class=\"card-title\"><i class=\"material-icons float-left btn-outline-danger\" style=\"cursor: pointer;\">room</i></a>";
 					echo "<a href='".$localizacao."' target='_blank' data-toggle=\"tooltip\" data-html=\"true\" title=\"Clique para visualizar no mapa.\"><h3 class=\"card-title\">".strtoupper($row->nome)."</h3></a><br>
 					<a href='".$localizacao."' target='_blank' data-toggle=\"tooltip\" data-html=\"true\" title=\"Clique para visualizar no mapa.\"><h4 class=\"card-title text-dark\">".strtoupper($row->endereco)."</h4></a>
 			    </div>			    			    

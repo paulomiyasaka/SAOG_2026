@@ -9,20 +9,29 @@ session_start();
 <!doctype html>
 <html lang="pt-br">
   <head>
-    <title>Listar Plantões - SAOG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SAOG</title>
  <!-- Required meta tags -->
-    <link rel="shortcut icon" href="http://correios.com.br/++theme++correios.site.tema/images/favicon.ico" type="image/x-icon">
+   <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/style.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.mask.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
   <script src="../js/script.js"></script>
+ 
+
+
+ 
+ 
  
   <script>
     $(document).ready(function(){
@@ -49,30 +58,36 @@ session_start();
 
   
       
-   <?php
+<?php
+$plantao = new plantao();
 include "barra_cima.php";
+$se = "CS";
+if(isset($_GET['se']) AND $_GET['se'] != ""){
+  $se = $_GET['se'];
+}
 ?>
+  
+
 	<div class="container">
-		
+		<div class="row justify-content-md-center">
+			<div class="col-10 align-self-center">
+			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+				<h1 class="display-4">Em manutenção... Aguarde uns instantes</h1>				
+		    </div>
+			</div>
+			</div>
+
 		<?php
-			$plantao = new plantao();
-			$plantao->botaoCadastrarPlantao();
-		?>
-
-	
-
-
-		<?php 
+			
+		//$plantao->botaoCadastrarPlantao();
 		
-		$plantao->listarPlantao();
+		//$plantao->setSE($se);
+		//$plantao->listarPlantaoAdministrador();
 		
 
 		?>
 
 	
-
-
-
 
 	<!-- MODAL PARA CONFIRMAR INSCRIÇÃO -->
 
@@ -106,8 +121,8 @@ include "barra_cima.php";
 						<input type="text" class="form-control" id="telefone_motorista" placeholder="0000-0000" onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_motorista">Nº Celular:</label>
-						<input type="text" class="form-control" id="celular_motorista" placeholder="(00) 00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<label for="celular_motorista">Nº Celular: (61)</label>
+						<input type="text" class="form-control" id="celular_motorista" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
   
   
@@ -154,13 +169,13 @@ include "barra_cima.php";
 						<input type="text" class="form-control" id="funcao_tratamento" placeholder="Cargo ou Função"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
 
-					-->  
+					-->
 					  <div class="form-group">
 						<label for="telefone_tratamento">Telefone da Seção:</label>
 						<input type="text" class="form-control" id="telefone_tratamento" placeholder="0000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_tratamento">Nº Celular:</label>
+						<label for="celular_tratamento">Nº Celular: (61)</label>
 						<input type="text" class="form-control" id="celular_tratamento" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
 					  
@@ -224,44 +239,7 @@ include "barra_cima.php";
 		  </div>
 		</div>
 
-				<!-- Modal
-		<div class="modal fade" id="modalInscritos" tabindex="-1" role="dialog" aria-labelledby="modalInscritosLongTitle" aria-hidden="true">
-		  <div class="modal-dialog modal-lg" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h3 class="modal-title" id="modalInscritosLongTitle">Inscritos no plantão:</h3>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-
-		      <div class="modal-body">
-		       
-		      		<table class="table">
-					  <thead>
-					    <tr>
-					      <th scope="col" class="text-center">#</th>
-					      <th scope="col" class="text-center">Nome</th>
-					      <th scope="col" class="text-center">Lotação</th>
-					    </tr>
-					  </thead>
-					  <tbody>
-					  	
-					  </tbody>
-					</table>
-
-		      </div>
-
-		      <div class="modal-footer">
-		        <button id="btn_imprimir" type="button" class="btn btn-primary" onclick="imprimirInscritos();">Imprimir</button>
-		        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>	
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
-		-->
-
+			
 		<!-- MODAL CADASTRAR UNIDADE -->
 
 		<!-- Modal -->
@@ -279,49 +257,84 @@ include "barra_cima.php";
 		
 		<form>
 		  <div class="form-group">
-			<label for="nome_unidade">Nome da Unidade</label>
+			<label for="nome_unidade">Nome da Unidade:</label>
 			<input type="text" name="nome_unidade" class="form-control" id="nome_unidade" placeholder="Nome da Unidade">
 		  </div>
+		  <div class="form-group">
+		  <label for="se">SE:</label>
+		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%">
+			<option value="0" selected>Selecionar</option>
+			<option disabled selected>Selecione</option>
+				<option value="SE/ACR">SE/ACR</option>
+				<option value="SE/AL">SE/AL</option>
+				<option value="SE/AM">SE/AM</option>
+				<option value="SE/AP">SE/AP</option>
+				<option value="SE/BA">SE/BA</option>
+				<option value="SE/BSB">SE/BSB</option>
+				<option value="SE/CE">SE/CE</option>
+				<option value="SE/ES">SE/ES</option>
+				<option value="SE/GO">SE/GO</option>
+				<option value="SE/MA">SE/MA</option>
+				<option value="SE/MG">SE/MG</option>
+				<option value="SE/MS">SE/MS</option>
+				<option value="SE/MT">SE/MT</option>
+				<option value="SE/PA">SE/PA</option>
+				<option value="SE/PB">SE/PB</option>
+				<option value="SE/PE">SE/PE</option>
+				<option value="SE/PI">SE/PI</option>
+				<option value="SE/PR">SE/PR</option>
+				<option value="SE/RJ">SE/RJ</option>
+				<option value="SE/RN">SE/RN</option>
+				<option value="SE/RO">SE/RO</option>
+				<option value="SE/RR">SE/RR</option>
+				<option value="SE/RS">SE/RS</option>
+				<option value="SE/SC">SE/SC</option>
+				<option value="SE/SE">SE/SE</option>
+				<option value="SE/SPI">SE/SPI</option>
+				<option value="SE/SPM">SE/SPM</option>
+				<option value="SE/TO">SE/TO</option>
+		  </select>
+			</div>
 		  
 		  <div class="input-group mb-3">
 		  <div class="input-group-prepend">
-			<label class="input-group-text" for="tipo_trabalho">Tipo do Trabalho</label>
+			<label class="input-group-text" for="tipo_trabalho">Tipo do Trabalho:</label>
 		  </div>
 		  <select class="custom-select" id="tipo_trabalho" name="tipo_trabalho" style="height: 35px; width: 100%">
 			<option value="0" selected>Escolha Tipo do Trabalho</option>
 			<option value="Tratamento">Tratamento</option>
-			<option value="Distribuição">Distribuição</option>
+			<option value="Distribuicao">Distribuição</option>
 		  </select>
+
 		</div>
 		  
 		  <div class="form-group">
-			<label for="endereco">Endereço da Unidade</label>
+			<label for="endereco">Endereço da Unidade:</label>
 			<input type="text" name="endereco" class="form-control" id="endereco" placeholder="Endereço da Unidade">
 		  </div>
 		  <div class="form-group">
-			<label for="url">URL - Localização no Google Maps:</label>
-			<input type="text" name="url" class="form-control" id="url" placeholder="Link para o mapa">
+			<label for="url">URL da localização (Google Maps):</label>
+			<input type="text" name="url" class="form-control" id="url" placeholder="Localização da Unidade">
 		  </div>
 		  <div class="form-group">
-			<label for="gerente">Gerente</label>
+			<label for="gerente">Nome do Gerente:</label>
 			<input type="text" name="gerente" class="form-control" id="gerente" placeholder="Gerente">
 		  </div>
 		  <div class="form-group">
 			<label for="matricula_gerente">Matrícula do Gerente:</label>
 			<input type="text" name="matricula_gerente" class="form-control" id="matricula_gerente" placeholder="Matrícula do Gerente">
 		  </div>
-
 		  <div class="form-group">
-			<label for="tel_gerente">Nº Celular do Gerente:</label>
-			<input type="text" name="tel_gerente" class="form-control" id="tel_gerente" placeholder="(00) 00000-0000">
+			<label for="tel_gerente">Nº Celular do Gerente: (61)</label>
+			<input type="text" name="tel_gerente" class="form-control" id="tel_gerente" placeholder="00000-0000">
 		  </div>
 		  <div class="form-group">
-			<label for="tel_gerente2">Telefone 1 da Unidade:</label>
-			<input type="text" name="tel_gerente2" class="form-control" id="tel_gerente2" placeholder="0000-0000">
+			<label for="tel_centro1">Telefone 1 da Unidade: </label>
+			<input type="text" name="tel_centro1" class="form-control" id="tel_centro1" placeholder="0000-0000">
 		  </div>
 		  <div class="form-group">
-			<label for="tel_centro">Telefone 2 da Unidade:</label>
-			<input type="text" name="tel_centro" class="form-control" id="tel_centro" placeholder="0000-0000">
+			<label for="tel_centro2">Telefone 2 da Unidade: </label>
+			<input type="text" name="tel_centro2" class="form-control" id="tel_centro2" placeholder="0000-0000">
 		  </div>
 		  <input type="hidden" name="acao" value="cadastrar">
 		</form>
@@ -334,7 +347,7 @@ include "barra_cima.php";
 		      </div>
 		    </div>
 		  </div>
-
+</div>
 <!-- ALERTA CADASTRO OK -->
 <div id="modalCadastroOK" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -359,11 +372,16 @@ include "barra_cima.php";
 </div>
 </div>
 
-<div class="modal fade" id="modalPlantao" tabindex="-1" role="dialog" aria-labelledby="cadastrarPlantao" aria-hidden="true">
+
+
+	<!-- MODAL CADASTRAR PLANTAO -->
+
+		<div class="modal fade" id="modalPlantao" tabindex="-1" role="dialog" aria-labelledby="cadastrarPlantao" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h2 class="modal-title text-center" id="cadastrarPlantao">Cadastrar Plantão</h2>
+		        <h2 class="modal-title text-center" id="alterarPlantao" hidden>Alterar Plantão</h2>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -380,11 +398,12 @@ include "barra_cima.php";
 				  <div class="input-group-prepend">
 					<label class="input-group-text" for="tipo_trabalho">Unidade e Tipo de Trabalho</label>
 				  </div>
-				  <select class="custom-select" id="id_unidade" name="id_unidade"  style="height: 35px; width: 100%" required>
+				  <select class="custom-select" id="id_unidade" name="id_unidade" onchange="habilitarAlterar();" style="height: 35px; width: 100%" required>
 				<option value="0" selected>Escolha a Unidade</option>
 				
 			<?php
 				$plantao = new plantao();
+				$plantao->setSE($se);
 				$plantao->listarUnidadesPlantao();				
 			?> 
 			  </select>
@@ -396,7 +415,7 @@ include "barra_cima.php";
 		  <div class="col">
 		  <div class="form-group">
 			<label for="data_inicio">Data Inicial:</label>
-			<input type="date" name="data_inicio" class="form-control" id="data_inicio" placeholder="Data Inicial - dd/mm/yyyy" required>
+			<input type="text" name="data_inicio" onchange="habilitarAlterar();" class="form-control" id="data_inicio" placeholder="Data Inicial - dd/mm/yyyy" required>
 		  </div>
 		  </div>
 		  
@@ -404,7 +423,8 @@ include "barra_cima.php";
 		  <div class="col">
 		  <div class="form-group">
 			<label for="hora_inicio">Hora de Início:</label>
-			<select class="form-control" style="height: 35px;" id="hora_inicio" name="hora_inicio" required>
+			<select class="form-control" style="height: 35px;" id="hora_inicio" name="hora_inicio" onchange="habilitarAlterar();" required>
+				<!-- <option value='NULL' selected>Selecione um horário</option> -->
 			  <?php $plantao->gerarHorario(); ?>			  
 			</select>
 		  </div>
@@ -415,14 +435,15 @@ include "barra_cima.php";
 		  <div class="col">
 		  <div class="form-group">
 			<label for="data_final">Data Final:</label>
-			<input type="date" name="data_final" class="form-control" id="data_final" placeholder="Data Final - dd/mm/yyyy" required>
+			<input type="text" name="data_final" onchange="habilitarAlterar();" class="form-control" id="data_final" placeholder="Data Final - dd/mm/yyyy" required>
 		  </div>
 		  </div>
 		  
 		  <div class="col">
 		  <div class="form-group">
 			<label for="hora_final">Hora do Término:</label>
-			<select class="form-control" style="height: 35px;" id="hora_final" name="hora_final" required>
+			<select class="form-control" style="height: 35px;" id="hora_final" name="hora_final" onchange="habilitarAlterar();" required>
+				<!-- <option value='NULL' selected>Selecione um horário</option> -->
 			  <?php $plantao->gerarHorario(); ?>	
 			</select>
 		  </div>
@@ -433,7 +454,7 @@ include "barra_cima.php";
 		  <div class="col">
 		  <div class="form-group">
 			<label for="vagas">Quantidade de Vagas Total</label>
-			<input type="text" name="vagas" class="form-control" id="vagas" placeholder="Quantidade de Vagas" required>
+			<input type="text" name="vagas" class="form-control" onchange="habilitarAlterar();" id="vagas" placeholder="Quantidade de Vagas" required>
 		  </div> 
 		</div>
 		  <div class="col">
@@ -441,14 +462,14 @@ include "barra_cima.php";
 		  		<label class="custom-control-label">Precisará de motoristas?</label>
 		  		<br>
 		  		<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="motorista" id="exampleRadios1" value="0" checked>
-				  <label class="form-check-label" for="exampleRadios1">
+				  <input class="form-check-input" onchange="habilitarAlterar();" type="radio" name="motorista" id="motoristaNao" value="0" >
+				  <label class="form-check-label" for="motoristaNao">
 				    NÃO
 				  </label>
 				</div>
 				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="motorista" id="exampleRadios2" value="1">
-				  <label class="form-check-label" for="exampleRadios2">
+				  <input class="form-check-input" onchange="habilitarAlterar();" type="radio" name="motorista" id="motoristaSim" value="1" checked>
+				  <label class="form-check-label" for="motoristaSim">
 				    SIM
 				  </label>
 				</div>	 		
@@ -463,15 +484,17 @@ include "barra_cima.php";
 		</div>
 		      <div class="modal-footer">
 		      	<button id="btn_cadastrar_plantao" type="submit" class="btn btn-success" onclick="cadastrarPlantao();">Cadastrar</button>
-		        
+		        <button id="btn_editar_plantao" type="submit" class="btn btn-success" onclick="editarPlantao();" disabled hidden>Alterar</button>
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
+	
 
 
-<div id="modalLoading" class="modal" tabindex="-1" role="dialog">
+
+	<div id="modalLoading" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
 <div id="cadastroOK" class="alert text-center" role="alert">
@@ -483,9 +506,8 @@ include "barra_cima.php";
 </div>
 
 
-	
-	</div>
 
+	</div>
 
 	
 </body>

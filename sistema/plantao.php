@@ -66,8 +66,9 @@ if(isset($_REQUEST['acao'])){
 
 		session_start();
 		$_SESSION['matricula'] = $matricula;
+		$nome_se = str_replace('SE/','',$se);
 		
-		echo "<script>window.location.href=\"../view/listar_plantao.php?se=".$se."\";</script>;";
+		echo "<script>window.location.href=\"../view/listar_plantao.php?se=".$nome_se."\";</script>;";
 	
 
 

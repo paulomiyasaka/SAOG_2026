@@ -41,8 +41,9 @@ $plantao = new plantao();
 include "barra_cima.php";
 $se = "CS";
 if(isset($_GET['se']) AND $_GET['se'] != ""){
-
+  
   $se = $_GET['se'];
+  $se = str_replace('SE/','',$se);
 
 }
 
@@ -65,8 +66,8 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				Informações e Procedimentos Operacionais
 			</button>
 			<?php 
-			//$pagina = $plantao->contatoDuvida($se);			
-			//include_once "contatos/".$pagina;
+			$pagina = $plantao->contatoDuvida($se);			
+			include_once "contatos/".$pagina;
 			
 			?>	
 				    
