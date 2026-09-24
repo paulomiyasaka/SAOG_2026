@@ -98,7 +98,8 @@ session_start();
       if($trabalho == "tratamento" || $trabalho == "Tratamento" || $trabalho == "TRATAMENTO"){
          $msg_trabalho = "Atividade de ".$trabalho;
       }else{
-        $msg_trabalho = "Atividade de ".$trabalho. " " . $motorista; 
+        //$msg_trabalho = "Atividade de ".$trabalho. " " . $motorista; 
+        $msg_trabalho = "Atividade de ".$trabalho; 
       }
 
     }
@@ -276,7 +277,7 @@ echo "<br><br><br>
         <div class="modal-content">
 <div id="cadastroError" class="alert alert-danger" role="alert">
   <h2 class="alert-heading text-center">Erro!</h2>
-  <h4>Algo deu errado ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
+  <h4>Erro ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
 </div>
 </div>
 </div>

@@ -98,7 +98,7 @@ include "barra_cima.php";
 
 		      <th scope=\"row\" colspan=\"2\" class=\"text-right bg-dark text-white\">Total de inscrições:</th>
 		      <td class=\"text-left bg-dark text-white\">".$total."</td>
-		      <td colspan=\"2\" class=\"text-center bg-dark text-white\"></td>
+		      <td colspan=\"3\" class=\"text-center bg-dark text-white\"></td>
 		    </tr>";
 
 		?>
@@ -147,7 +147,7 @@ include "barra_cima.php";
 
 		      <th scope=\"row\" colspan=\"2\" class=\"text-right bg-dark text-white\">Total de inscrições:</th>
 		      <td class=\"text-left bg-dark text-white\">".$total."</td>
-		      <td colspan=\"2\" class=\"text-center bg-dark text-white\"></td>
+		      <td colspan=\"3\" class=\"text-center bg-dark text-white\"></td>
 		    </tr>";
 
 		?>

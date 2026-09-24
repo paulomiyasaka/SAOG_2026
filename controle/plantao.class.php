@@ -413,7 +413,7 @@ class plantao extends conecta{
 
 	public function listaInscritos($data){
 
-		$sql = "SELECT unidades.nome, COUNT(cadastrados.id_cadastrado) AS inscritos, plantao.vagas, plantao.turno_inicio AS data FROM plantao join (unidades, cadastrados) ON plantao.id_unidade = unidades.id_unidade AND cadastrados.id_plantao = plantao.id_plantao WHERE plantao.turno_inicio = :data  AND plantao.status = :status GROUP BY plantao.turno_inicio, unidades.nome ORDER BY unidades.nome ASC, plantao.turno_inicio ASC";
+		$sql = "SELECT unidades.nome, unidades.se, COUNT(cadastrados.id_cadastrado) AS inscritos, plantao.vagas, plantao.turno_inicio AS data FROM plantao join (unidades, cadastrados) ON plantao.id_unidade = unidades.id_unidade AND cadastrados.id_plantao = plantao.id_plantao WHERE plantao.turno_inicio = :data  AND plantao.status = :status GROUP BY plantao.turno_inicio, unidades.nome ORDER BY unidades.nome ASC, plantao.turno_inicio ASC";
 
 		$dados = array(":data" => $data, ":status" => 1);
 		$query = parent::executarSQL($sql, $dados);
@@ -2049,6 +2049,8 @@ public function verInscritosPassado($id_plantao){
 		$pagina = "cs.html";
 		switch($se){
 			case 'BSB': $pagina = "bsb.html";
+			break;
+			case 'PB': $pagina = "pb.html";
 			break;
 
 			default: $pagina = "cs.html";

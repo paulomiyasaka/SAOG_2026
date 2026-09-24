@@ -308,7 +308,7 @@ $plantao = new plantao();
 		<form>
 		  <div class="form-group">
 			<label for="nome_unidade">Nome da Unidade:</label>
-			<input type="text" name="nome_unidade" class="form-control" id="nome_unidade" placeholder="Nome da Unidade">
+			<input type="text" name="nome_unidade" class="form-control" id="nome_unidade" placeholder="Nome da Unidade" required>
 		  </div>
 		  <div class="form-group">
 		  <label for="se">SE:</label>
@@ -366,7 +366,7 @@ $plantao = new plantao();
 		  </div>
 		  <div class="form-group">
 			<label for="url">URL da localização (Google Maps):</label>
-			<input type="text" name="url" class="form-control" id="url" placeholder="Localização da Unidade">
+			<input type="text" name="url" class="form-control" id="url" placeholder="Exemplo: https://maps.app.goo.gl/1RvS5UsaaDeTAgco6">
 		  </div>
 		  <div class="form-group">
 			<label for="gerente">Nome do Gerente:</label>

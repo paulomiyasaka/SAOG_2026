@@ -99,6 +99,7 @@ include "barra_cima.php";
     <tr class="text-center text-white bg-dark">
       <th scope="col" class="text-center"></th>
       <th scope="col" class="text-center">Unidade</th>
+      <th scope="col" class="text-center">SE</th>
       <th scope="col" class="text-center">Vagas Solicitadas</th>
       <th scope="col" class="text-center">Inscritos</th>
       <th scope="col" class="text-center">Data do Apoio</th>
@@ -115,6 +116,7 @@ include "barra_cima.php";
 			echo "<tr>
 		      <th scope=\"row\">".$contador++."</th>
 		      <td>".$value->nome."</td>
+          <td>".$value->se."</td>
 		      <td class=\"text-center\">".$value->vagas."</td>
 		      <td class=\"text-center\">".$value->inscritos."</td>
 		      <td class=\"text-center\">".$funcoes->diaSemana(date('w', strtotime($value->data))).", ".date('d/m/Y', strtotime($value->data))."</td>
@@ -127,7 +129,7 @@ include "barra_cima.php";
 
 		      <th scope=\"row\" colspan=\"2\" class=\"text-right bg-dark text-white\">Total de inscrições:</th>
 		      <td class=\"text-left bg-dark text-white\">".$total."</td>
-		      <td colspan=\"2\" class=\"text-center bg-dark text-white\"></td>
+		      <td colspan=\"3\" class=\"text-center bg-dark text-white\"></td>
 		    </tr>";
 
 		?>
