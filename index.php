@@ -37,14 +37,14 @@ echo "<script>window.location.href='navegador.php'</script>";
       <div class="col-4">
       <img class="mb-4" width="280" height="105" src="logo_correios.png" alt="Correios">
       <hr>
-      <h2 class="h2 mb-3 font-weight-normal">SAOG-DELOG</h2>      
+      <h2 class="h2 mb-3 font-weight-normal">SAOG</h2>      
       <h3 class="h3 mb-3 font-weight-normal">Sistema de Apoio Operacional e Gestão</h3>
       <br>
       <hr>
       <label for="matricula_login" class="sr-only">Matrícula</label>
       <input type="text" id="matricula_login" name="matricula_login" class="form-control text-center" placeholder="Informe a sua Matrícula" required autofocus>
       <hr>
-      <input type="hidden" value="e10adc3949ba59abbe56e057f20f883e"/>
+      
       <div id="myModal" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -55,7 +55,7 @@ echo "<script>window.location.href='navegador.php'</script>";
             </button>
           </div>
           <div class="modal-body">
-            <h5 class="text-center">A matrícula informada não foi encontrada.</h5>
+            <h5 class="text-center">A matrícula informada não foi encontrada, verifique e tente novamente.</h5>
             <h5 class="text-dark"><b>Entre em contato com a Gerência Regional para habilitar o acesso.</b></h5>
           </div>
           <div class="modal-footer">

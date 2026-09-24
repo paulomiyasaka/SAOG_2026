@@ -78,9 +78,17 @@ class unidades extends conecta{
 	
 	//consultar unidades cadastradas
 	public function consultarUnidades(){
+		$se = $this->getSE();
+		$sql = "";
+		$dados = array();
+		if($se == "CS"){
+			$sql = "SELECT * FROM unidades WHERE status = :status ORDER BY nome";
+			$dados = array(":status" => 1);
+		}else{
+			$sql = "SELECT * FROM unidades WHERE se = :se ORDER BY nome";
+			$dados = array(":se" => "SE/".$se);
+		}
 		
-		$sql = "SELECT * FROM unidades WHERE status = :status ORDER BY nome";
-		$dados = array(":status" => 1);
 		$query = conecta::executarSQL($sql, $dados);
 		$resultado = $query->fetchAll(PDO::FETCH_OBJ);
 		$quant = $query->rowCount();

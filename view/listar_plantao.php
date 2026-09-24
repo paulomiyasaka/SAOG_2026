@@ -2,7 +2,7 @@
 include_once '../controle/auto_load.class.php';
 new auto_load();
 $funcoes = new funcoes();
-$funcoes->charset();
+//$funcoes->charset();
 session_start();
 ?>
 
@@ -40,12 +40,22 @@ session_start();
 $plantao = new plantao();
 include "barra_cima.php";
 $se = "CS";
-if(isset($_GET['se']) AND $_GET['se'] != ""){
+
+if(isset($_SESSION['se']) AND $_SESSION['se'] != ""){
   
-  $se = $_GET['se'];
-  $se = str_replace('SE/','',$se);
+  $se = $_SESSION['se'];
+
+if(isset($_GET['se']) AND $_GET['se'] != "CS" AND $_GET['se'] != ""){
+  
+  	$se = $_GET['se'];  	
+
+	}
+  
 
 }
+
+
+$se = str_replace('SE/','',$se);
 
 ?>
   
@@ -133,6 +143,11 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			<div class="row justify-content-md-center">
 			<div class="col-10 align-self-center">
 			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+				<?php 
+
+				if($se == "CS" OR $_SESSION['se'] == "CS"){
+				
+				?>
 				<h1 class="display-4">Verifique os plantões disponíveis para inscrição selecionando uma SE:</h1>
 				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
 					<option disabled selected>Selecione</option>
@@ -165,6 +180,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 					<option value="SPM">SE/SPM</option>
 					<option value="TO">SE/TO</option>
 				</select> 
+				<?php } ?>
 		    </div>
 			</div>
 			</div>
@@ -246,8 +262,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			  <!--
 		        <h3>Deseja confirmar cadastro no plantão?</h3> 
 				<hr>
-				
-		    	        	
+				    	        	
 		        	
 					
 					 <div class="form-group">
@@ -265,14 +280,14 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 					  </div>
   
   
-			  		<label class="custom-control-label"><h4>Você possui CNH e tem interesse em dirigir veículos dos Correios?</h4></label>
+			  		<label class="custom-control-label"><h4>Caso seja necessário, você tem interesse em dirigir veículo dos Correios?</h4></label>
 			  		<br>
 			  		<div class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="0">
+					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="0" checked>
 					  <label class="form-check-label" for="inlineCheckbox1"> NÃO </label>
 					</div>
 					<div class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" id="inlineCheckbox2" name="motor" value="1" checked>
+					  <input class="form-check-input" type="radio" id="inlineCheckbox2" name="motor" value="1">
 					  <label class="form-check-label" for="inlineCheckbox2"> SIM </label>
 					</div>
 			  		
@@ -313,7 +328,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 						<input type="text" class="form-control" id="telefone_tratamento" placeholder="0000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_tratamento">Celular: (61)</label>
+						<label for="celular_tratamento">Celular: </label>
 						<input type="text" class="form-control" id="celular_tratamento" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
 					  
@@ -351,7 +366,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <h3>Deseja confirmar o cancelamento deste plantão?</h3>
+		        <h3>Deseja cancelar o plantão?</h3>
 	  				
 				</div>
 	        
@@ -377,7 +392,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <h3>Deseja confirmar o cancelamento da inscrição neste plantão?</h3>
+		        <h3>Deseja cancelar sua inscrição neste plantão?</h3>
 		      </div>
 		      <div class="modal-footer">		      	
 		      	<button id="cancelar_inscrever_plantao" type="button" class="btn btn-success" onclick="cancelarInscreverPlantao();">Confirmar</button>
@@ -406,7 +421,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
         <div class="modal-content">
 <div id="cadastroError" class="alert alert-danger" role="alert">
   <h2 class="alert-heading text-center">Erro!</h2>
-  <h4>Algo deu errado ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
+  <h4>Erro ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
 </div>
 </div>
 </div>
@@ -436,7 +451,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			<form>
 				<div class="input-group mb-3">
 				  <div class="input-group-prepend">
-					<label class="input-group-text" for="tipo_trabalho">Unidade e Tipo de Trabalho</label>
+					<label class="input-group-text" for="tipo_trabalho">Unidade</label>
 				  </div>
 				  <select class="custom-select" id="id_unidade" name="id_unidade" onchange="habilitarAlterar();" style="height: 35px; width: 100%" required>
 				<option value="0" selected>Escolha a Unidade</option>

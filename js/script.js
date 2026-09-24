@@ -724,7 +724,7 @@ function registrarPresenca(){
 				        nome_unidade = nome_unidade.replace('"',"");
 				        nome_unidade = nome_unidade.replace('"',"");
 
-				        var opcao = nome_unidade + " - " + tipo_trabalho;
+				        var opcao = nome_unidade;
 				        //unidade[0] = unidade[0].replace('"',"");
 				        //alert(opcao);
 				        $("#id_unidade").prepend("<option id='opt_opcao' value='"+unid[1]+"' selected>"+opcao+"</option>");

@@ -90,9 +90,11 @@ class plantao extends conecta{
 	
 	//listar unidades disponíveis para cadastrar plantão
 	public function listarUnidadesPlantao(){
+		$se = $this->getSE();
 		$unid = new unidades();
+		$unid->setSE($se);
 		$unidades = $unid->consultarUnidades();		
-		$quant = count($unidades);
+		//$quant = count($unidades);
 		$i = 0;
 		
 		foreach($unidades as $row){
@@ -632,7 +634,7 @@ class plantao extends conecta{
 			echo "<h1 class=\"display-4\">Selecione uma Superintendência.</h1></div></div>";
 
 		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1>";
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".str_replace("SE\/", "", strtoupper($se))."</h1>";
 		}
 
 
@@ -835,7 +837,7 @@ class plantao extends conecta{
 			echo "<h1 class=\"display-4\">Selecione uma Superintendência.</h1></div></div>";
 
 		}else{
-			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a SE/".strtoupper($se)."</h1>";
+			echo "<div class=\"col-12 align-self-center\"><div class=\"pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center\"><h1 class=\"display-4\">Não Há Plantões Ativos para a ".strtoupper($se)."</h1>";
 		}
 
 
@@ -1054,11 +1056,8 @@ class plantao extends conecta{
 
 					</div>						
 					<div class=\"col text-center\">
-						<a href=\"lista_inscritos.php\" class=\"btn btn-outline-info border-info\">Listar Inscritos</a>
-					</div>	
-					<div class=\"col text-center\">
-						<a href=\"lista_funcionarios.php\" class=\"btn btn-outline-info border-info\">Funcionários</a>
-					</div>	
+						<a href=\"lista_inscritos.php\" class=\"btn btn-outline-info border-info\">Quantidade de Inscritos</a>
+					</div>		
 
 					</div>";
 

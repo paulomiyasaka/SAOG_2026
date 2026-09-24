@@ -62,9 +62,24 @@ session_start();
 $plantao = new plantao();
 include "barra_cima.php";
 $se = "CS";
-if(isset($_GET['se']) AND $_GET['se'] != ""){
-  $se = $_GET['se'];
+
+if(isset($_SESSION['se']) AND $_SESSION['se'] != ""){
+  
+  $se = $_SESSION['se'];
+
+if(isset($_GET['se']) AND $_GET['se'] != "CS" AND $_GET['se'] != ""){
+  
+  	$se = $_GET['se'];  	
+
+	}
+  
+
 }
+
+
+$se = str_replace('SE\/','',$se);
+$plantao = new plantao();
+
 ?>
   
 
@@ -72,6 +87,11 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		<div class="row justify-content-md-center">
 			<div class="col-10 align-self-center">
 			<div class="form-group pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+				<?php
+					$plantao->botaoCadastrarPlantao();
+					if($se == "CS" OR $_SESSION['se'] == "CS"){
+
+				?>
 				<h1 class="display-4">Plantões disponíveis para inscrição:</h1>
 				<select class="custom-select" style="height: 35px" id="selecionarSE" onchange="buscarPlantaoSE()" aria-label="Default select example">
 					<option disabled selected>Selecione</option>
@@ -108,10 +128,9 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			</div>
 			</div>
 
-		<?php
-			
-		$plantao->botaoCadastrarPlantao();
-		
+		<?php		
+
+		}
 		$plantao->setSE($se);
 		$plantao->listarPlantaoAdministrador();
 		
@@ -149,22 +168,22 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 
 					  <div class="form-group">
 						<label for="telefone_motorista">Telefone da Seção:</label>
-						<input type="text" class="form-control" id="telefone_motorista" placeholder="0000-0000" onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<input type="text" class="form-control" id="telefone_motorista" placeholder="(00) 0000-0000" onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_motorista">Nº Celular: (61)</label>
-						<input type="text" class="form-control" id="celular_motorista" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
-					  </div>
+						<label for="celular_motorista">Nº Celular: ()</label>
+						<input type="text" class="form-control" id="celular_motorista" placeholder="(00) 00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
+					  </div> 					
+  					
   
-  
-			  		<label class="custom-control-label"><h4>Você tem interesse em dirigir veículos dos Correios?</h4></label>
+			  		<label class="custom-control-label"><h4>Caso seja necessário, você tem interesse em dirigir veículo dos Correios?</h4></label>
 			  		<br>
 			  		<div class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="0">
+					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="0" checked>
 					  <label class="form-check-label" for="inlineCheckbox1"> NÃO </label>
 					</div>
 					<div class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="1" checked>
+					  <input class="form-check-input" type="radio" id="inlineCheckbox1" name="motor" value="1">
 					  <label class="form-check-label" for="inlineCheckbox1"> SIM </label>
 					</div>
 			  		
@@ -185,7 +204,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h3 class="modal-title" id="modalInscreverLongTitle">Confirmar inscrição - Tratamento</h3>
+		        <h3 class="modal-title" id="modalInscreverLongTitle">Confirmar inscrição</h3>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -203,11 +222,11 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 					-->
 					  <div class="form-group">
 						<label for="telefone_tratamento">Telefone da Seção:</label>
-						<input type="text" class="form-control" id="telefone_tratamento" placeholder="0000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<input type="text" class="form-control" id="telefone_tratamento" placeholder="(00) 0000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>					  
 					  <div class="form-group">
-						<label for="celular_tratamento">Nº Celular: (61)</label>
-						<input type="text" class="form-control" id="celular_tratamento" placeholder="00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
+						<label for="celular_tratamento">Nº Celular: ()</label>
+						<input type="text" class="form-control" id="celular_tratamento" placeholder="(00) 00000-0000"  onkeypress="verificarCampos();" onchange="verificarCampos();">
 					  </div>
 					  
 					  
@@ -234,7 +253,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <h3>Deseja confirmar o cancelamento deste plantão?</h3>
+		        <h3>Deseja cancelar este plantão?</h3>
 	  				
 				</div>
 	        
@@ -260,7 +279,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		        <h3>Deseja confirmar o cancelamento da inscrição neste plantão?</h3>
+		        <h3>Deseja cancelar a inscrição neste plantão?</h3>
 		      </div>
 		      <div class="modal-footer">		      	
 		      	<button id="cancelar_inscrever_plantao" type="button" class="btn btn-success" onclick="cancelarInscreverPlantao();">Confirmar</button>
@@ -294,8 +313,9 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		  <div class="form-group">
 		  <label for="se">SE:</label>
 		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%">
-			<option value="0" selected>Selecionar</option>
-			<option disabled selected>Selecione</option>
+			<option value="<?php echo 'SE/'.$se;?>" selected><?php echo 'SE/'.$se;?></option>
+			<!--
+				<option disabled selected>Selecione</option>
 				<option value="SE/ACR">SE/ACR</option>
 				<option value="SE/AL">SE/AL</option>
 				<option value="SE/AM">SE/AM</option>
@@ -324,6 +344,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				<option value="SE/SPI">SE/SPI</option>
 				<option value="SE/SPM">SE/SPM</option>
 				<option value="SE/TO">SE/TO</option>
+			-->
 		  </select>
 			</div>
 		  
@@ -356,16 +377,16 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 			<input type="text" name="matricula_gerente" class="form-control" id="matricula_gerente" placeholder="Matrícula do Gerente">
 		  </div>
 		  <div class="form-group">
-			<label for="tel_gerente">Nº Celular do Gerente: (61)</label>
-			<input type="text" name="tel_gerente" class="form-control" id="tel_gerente" placeholder="00000-0000">
+			<label for="tel_gerente">Nº Celular do Gerente: ()</label>
+			<input type="text" name="tel_gerente" class="form-control" id="tel_gerente" placeholder="(00) 00000-0000">
 		  </div>
 		  <div class="form-group">
 			<label for="tel_centro1">Telefone 1 da Unidade: </label>
-			<input type="text" name="tel_centro1" class="form-control" id="tel_centro1" placeholder="0000-0000">
+			<input type="text" name="tel_centro1" class="form-control" id="tel_centro1" placeholder="(00) 0000-0000">
 		  </div>
 		  <div class="form-group">
 			<label for="tel_centro2">Telefone 2 da Unidade: </label>
-			<input type="text" name="tel_centro2" class="form-control" id="tel_centro2" placeholder="0000-0000">
+			<input type="text" name="tel_centro2" class="form-control" id="tel_centro2" placeholder="(00) 0000-0000">
 		  </div>
 		  <input type="hidden" name="acao" value="cadastrar">
 		</form>
@@ -433,7 +454,7 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				<option value="0" selected>Escolha a Unidade</option>
 				
 			<?php
-				$plantao = new plantao();
+				//$plantao = new plantao();
 				$plantao->setSE($se);
 				$plantao->listarUnidadesPlantao();				
 			?> 
@@ -490,7 +511,10 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 		</div>
 		  <div class="col">
 		  	<div class="form-group">
+		  		<input type="hidden" name="motorista" id="motoristaSim" value="1">
+		  		<!--
 		  		<label class="custom-control-label">Precisará de motoristas?</label>
+
 		  		<br>
 		  		<div class="form-check form-check-inline">
 				  <input class="form-check-input" onchange="habilitarAlterar();" type="radio" name="motorista" id="motoristaNao" value="0" >
@@ -503,8 +527,9 @@ if(isset($_GET['se']) AND $_GET['se'] != ""){
 				  <label class="form-check-label" for="motoristaSim">
 				    SIM
 				  </label>
+				  
 				</div>	 		
-
+				-->
 		  	</div>		  	
 			 </div>
 			  </div>
