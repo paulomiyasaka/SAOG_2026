@@ -388,11 +388,12 @@ if(isset($_REQUEST['acao'])){
 		if(isset($_REQUEST['motorista'])){
 			$plantao->setMotorista($_REQUEST['motorista']);
 		}else{
-			$plantao->setMotorista("0");
+			$plantao->setMotorista("1");
 		}
-		$m = $plantao->getMotorista();
+		//$m = $plantao->getMotorista();
+		$plantao->getMotorista();
 		$alterar = $plantao->alterarPlantao();
-		/*
+		
 		$retorno = "";
 		if($alterar){	
 			$retorno = "{'resultado':'true'}";						
@@ -400,9 +401,9 @@ if(isset($_REQUEST['acao'])){
 			$retorno = "{'resultado':'false'}";			
 		}
 
-		*/
-		//var_dump(json_encode($alterar));
-		echo 	json_encode($alterar);
+		
+		var_dump(json_encode($retorno));
+		//echo 	json_encode($alterar);
 
 
 	

@@ -307,12 +307,12 @@ $plantao = new plantao();
 		
 		<form>
 		  <div class="form-group">
-			<label for="nome_unidade">Nome da Unidade:</label>
+			<label for="nome_unidade">Nome da Unidade:<span class="text-danger">*</span></label>
 			<input type="text" name="nome_unidade" class="form-control" id="nome_unidade" placeholder="Nome da Unidade" required>
 		  </div>
 		  <div class="form-group">
-		  <label for="se">SE:</label>
-		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%">
+		  <label for="se">SE:<span class="text-danger">*</span></label>
+		  <select class="custom-select" id="se" name="se" style="height: 35px; width: 100%" required>
 			<option value="<?php echo 'SE/'.$se;?>" selected><?php echo 'SE/'.$se;?></option>
 			<!--
 				<option disabled selected>Selecione</option>
@@ -350,34 +350,32 @@ $plantao = new plantao();
 		  
 		  <div class="input-group mb-3">
 		  <div class="input-group-prepend">
-			<label class="input-group-text" for="tipo_trabalho">Tipo do Trabalho:</label>
+			<label class="input-group-text" for="tipo_trabalho">Tipo do Trabalho:<span class="text-danger">*</span></label>
 		  </div>
-		  <select class="custom-select" id="tipo_trabalho" name="tipo_trabalho" style="height: 35px; width: 100%">
-			<option value="0" selected>Escolha Tipo do Trabalho</option>
-			<option value="Tratamento">Tratamento</option>
-			<option value="Distribuicao">Distribuição</option>
+		  <select class="custom-select" id="tipo_trabalho" name="tipo_trabalho" style="height: 35px; width: 100%" required>			
+			<option value="Distribuicao" selected>Distribuição</option><option value="Tratamento">Tratamento</option>
 		  </select>
 
 		</div>
 		  
 		  <div class="form-group">
-			<label for="endereco">Endereço da Unidade:</label>
-			<input type="text" name="endereco" class="form-control" id="endereco" placeholder="Endereço da Unidade">
+			<label for="endereco">Endereço da Unidade:<span class="text-danger">*</span></label>
+			<input type="text" name="endereco" class="form-control" id="endereco" placeholder="Endereço da Unidade" required>
 		  </div>
 		  <div class="form-group">
 			<label for="url">URL da localização (Google Maps):</label>
 			<input type="text" name="url" class="form-control" id="url" placeholder="Exemplo: https://maps.app.goo.gl/1RvS5UsaaDeTAgco6">
 		  </div>
 		  <div class="form-group">
-			<label for="gerente">Nome do Gerente:</label>
-			<input type="text" name="gerente" class="form-control" id="gerente" placeholder="Gerente">
+			<label for="gerente">Nome do Gerente:<span class="text-danger">*</span></label>
+			<input type="text" name="gerente" class="form-control" id="gerente" placeholder="Gerente" required>
 		  </div>
 		  <div class="form-group">
-			<label for="matricula_gerente">Matrícula do Gerente:</label>
-			<input type="text" name="matricula_gerente" class="form-control" id="matricula_gerente" placeholder="Matrícula do Gerente">
+			<label for="matricula_gerente">Matrícula do Gerente:<span class="text-danger">*</span></label>
+			<input type="text" name="matricula_gerente" class="form-control" id="matricula_gerente" placeholder="Matrícula do Gerente" required>
 		  </div>
 		  <div class="form-group">
-			<label for="tel_gerente">Nº Celular do Gerente: ()</label>
+			<label for="tel_gerente">Nº Celular do Gerente:</label>
 			<input type="text" name="tel_gerente" class="form-control" id="tel_gerente" placeholder="(00) 00000-0000">
 		  </div>
 		  <div class="form-group">
@@ -406,7 +404,7 @@ $plantao = new plantao();
         <div class="modal-content">
 <div id="cadastroOK" class="alert alert-success" role="alert">
   <h2 class="alert-heading text-center">Sucesso!</h2>
-  <h4>Registro efetuado com sucesso.</h4>
+  <h4>Registro alterado com sucesso.</h4>
 </div>
 </div>
 </div>
@@ -418,7 +416,7 @@ $plantao = new plantao();
         <div class="modal-content">
 <div id="cadastroError" class="alert alert-danger" role="alert">
   <h2 class="alert-heading text-center">Erro!</h2>
-  <h4>Algo deu errado ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
+  <h4>Erro ao tentar alterar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
 </div>
 </div>
 </div>

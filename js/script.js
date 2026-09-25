@@ -837,50 +837,35 @@ function editarPlantao(){
 				datatype: 'JSON',
 				type: 'POST',
 
-			success: function(result,status){
-				//alert(typeof(result)+ " " +result);
-				loadingFinish();  	 
-				//window.location.reload();
-				//var retorno = '['+ result + ']'; 
+			success: function(result,status){				
+
+	    		var retorno = '['+ result + ']'; 
 				//var j = '{"dados":' + result + '}';
+				$("#modalPlantao").modal('hide');
+				//alert("retorno = "+retorno + " success = " + status);					
+				var r = retorno.split(':');			    		
+				var resultado = r[1];
+				var tamanho = resultado.length;
 
-				//var r = retorno.split(':');			    		
-				//var resultado = r[1];
-				//var tamanho = resultado.length;
-				//resultado = resultado.replace(resultado.substring(0,1),"");
+				resultado = resultado.replace(resultado.substring(0,1),"");
 				
-				//tamanho = resultado.length;
-				resultado = result;
-				loadingFinish();  	 
-				if(resultado == 'true'){   	 		
-	    		
-	    			
-					$("#modalCadastroOK").modal('show');
-					alert(typeof(result)+ " " +result);
-					//window.location.reload();
-	    		}else{
-	    				 
-	    			$("#modalCadastroError").modal('show');
-	    		}
-
-				/*	    		
-				var resultado = result;
-				
-				if(resultado == "true" && status == "success"){   	 		
+				tamanho = resultado.length;
+				resultado = resultado.replace(resultado.substring(tamanho-6,tamanho),"");
+				//alert("resultado = "+resultado);
+				//loadingFinish();  	 
+				if(resultado == 'true' && status == 'success'){   	 		
 	    			
 	    			$("#modalCadastroOK").modal('show').on('hidden.bs.modal', function (e) {
 					  	window.location.reload();
 					});
+					
+				
 
 	    		}else{
-
-	    			$("#modalCadastroError").modal('show').on('hidden.bs.modal', function (e) {
-	    				
-					  	window.location.reload();
-					});
+	    			
+	    			$('#modalCadastroError').modal('show');
+	    			
 	    		}
-
-	    		*/
 
 		},
 
