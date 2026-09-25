@@ -1437,10 +1437,9 @@ public function verInscritosPassado($id_plantao){
 				    	<td>$row->nome</td>
 				      		<td>$row->lotacao</td>				      		
 				      <td>$row->funcao</td>
-				      <td>".substr($row->telefone, 0, 4)."-".substr($row->telefone, 4, 4)."</td>
-				      <td>(61) ".substr($row->celular, 0, 5)."-".substr($row->celular, 5, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 4)."-".substr($row->telefone, 6, 4)."</td>
 
-				      //<td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
+				      <td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
 
 
 				      $presenca = $this->verificarPresenca($id_plantao, $id_cadastrado);

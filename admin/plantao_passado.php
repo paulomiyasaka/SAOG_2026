@@ -271,7 +271,7 @@ include "barra_cima.php";
 		
 	</div>
 		      </div>
-		      <d<div class="modal-footer">
+		      <div class="modal-footer">
 		      	<button id="btn_cadastrar_unidade" type="submit" class="btn btn-success" onclick="cadastrarUnidade();">Cadastrar</button>		        
 		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 		      </div>
