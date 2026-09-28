@@ -238,6 +238,7 @@ if(isset($_REQUEST['acao'])){
 
 		$id_plantao = null;
 		$id_cadastrado = null;
+		$atividade = null;
 
 		if(isset($_REQUEST["id_plantao"])){
 			$id_plantao = $_REQUEST["id_plantao"];
@@ -246,10 +247,14 @@ if(isset($_REQUEST['acao'])){
 		if(isset($_REQUEST["id_cadastrado"])){
 			$id_cadastrado = $_REQUEST["id_cadastrado"];
 		}
+
+		if(isset($_REQUEST["atividade"])){
+			$atividade = $_REQUEST["atividade"];
+		}
 		
 		if($id_plantao != null || $id_plantao != "" || $id_cadastrado != null || $id_cadastrado != ""){
 			$plantao = new plantao();
-			$registrar_presenca = $plantao->registrarPresenca($id_plantao, $id_cadastrado);
+			$registrar_presenca = $plantao->registrarPresenca($id_plantao, $id_cadastrado, $atividade);
 		}
 
 		

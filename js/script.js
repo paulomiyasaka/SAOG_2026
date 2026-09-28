@@ -494,11 +494,14 @@ function limparForm(){
 }
 
 function presencaPlantao(id_plantao, id_cadastrado){
-		
+	
+		//alert(id_plantao);
 		$("#btn_confirmar_presenca").attr("id-plantao", id_plantao);
 		$("#btn_confirmar_presenca").attr("cadastro", id_cadastrado);
 		$("#btn_confirmar_falta").attr("id-plantao", id_plantao);
 		$("#btn_confirmar_falta").attr("cadastro", id_cadastrado);
+		$("#btn_resetar_atividade").attr("id-plantao", id_plantao);
+		$("#btn_resetar_atividade").attr("cadastro", id_cadastrado);
 
 	}
 
@@ -507,6 +510,7 @@ function registrarPresenca(){
 		
 		var id_plantao = $("#btn_confirmar_presenca").attr("id-plantao");
 		var id_cadastrado = $("#btn_confirmar_presenca").attr("cadastro");
+		var atividade = $("#atividade_funcionario").val();
 		
 		
 		$("#modalConfirmar").modal('hide');
@@ -515,7 +519,8 @@ function registrarPresenca(){
 				data: {
 						acao:'registrar_presenca',
 						id_plantao:id_plantao,
-						id_cadastrado:id_cadastrado
+						id_cadastrado:id_cadastrado,
+						atividade: atividade
 					},
 				datatype: 'JSON',
 				type: 'POST',
@@ -610,7 +615,58 @@ function registrarPresenca(){
 	}
 
 
+	function resetarAtividade(){
+		loading();  	 
+		
+		var id_plantao = $("#btn_resetar_atividade").attr("id-plantao");
+		var id_cadastrado = $("#btn_resetar_atividade").attr("cadastro");
+		
+		
+		$("#modalResetar").modal('hide');
+		
+		$.ajax({url: "plantao.php", 
+				data: {
+						acao:'resetar_atividade',
+						id_plantao:id_plantao,
+						id_cadastrado:id_cadastrado
+					},
+				datatype: 'JSON',
+				type: 'POST',
 
+				success: function(result,status){
+				var retorno = '['+ result + ']'; 
+				//var j = '{"dados":' + result + '}';
+
+				var r = retorno.split(':');			    		
+				var resultado = r[1];
+				var tamanho = resultado.length;
+
+				resultado = resultado.replace(resultado.substring(0,1),"");
+				
+				tamanho = resultado.length;
+				resultado = resultado.replace(resultado.substring(tamanho-6,tamanho),"");
+				loadingFinish();  	 
+				if(resultado == 'true' && status == 'success'){   	 		
+	    		
+	    			
+					$("#modalCadastroOK").modal('show');
+					
+					window.location.reload();
+	    		}else{
+	    				 
+	    			$("#modalCadastroError").modal('show');
+	    		}
+
+
+
+        			},
+
+        });
+
+        
+
+
+	}
 
 
 

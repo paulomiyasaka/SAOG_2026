@@ -19,30 +19,9 @@ session_start();
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
-  <script src="../js/script.js"></script>
+
  
-    <!-- Custom styles for this template -->
-  <script>
-    $(document).ready(function(){
 
-      if (typeof(Storage) !== 'undefined') {
-        if(localStorage.getItem("matricula") == null){        
-          //alert(localStorage.getItem("nome"));
-          window.location.href = "../index.php";
-        }
-      }else {
-        alert('Utilize um destes navegadores: Google Chrome ou Mozilla Firefox.');
-      }
-
-    });
-    
-
-    
-  
-  </script>
     
   
   </head>
@@ -278,7 +257,7 @@ echo "<br><br><br>
         <div class="modal-content">
 <div id="cadastroError" class="alert alert-danger" role="alert">
   <h2 class="alert-heading text-center">Erro!</h2>
-  <h4>Algo deu errado ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
+  <h4>Erro ao tentar efetuar o cadastro.<br>Verifique os seus dados e tente novamente!</h4>
 </div>
 </div>
 </div>
@@ -286,7 +265,7 @@ echo "<br><br><br>
 
 <!-- Modal -->
 
-    <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarTitle" aria-hidden="true">
+    <div class="modal fade" id="modalPresenca" tabindex="-1" role="dialog" aria-labelledby="modalConfirmarTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header ">
@@ -296,7 +275,12 @@ echo "<br><br><br>
             </button>
           </div>
           <div class="modal-body">
-            <h3 class="text-center">Deseja confirmar a PRESENÇA do funcionário?</h3>                     
+            <h3 class="text-center">Confirme a atividade do funcionário</h3> 
+            <select class="form-control" style="height: 35px;" id="atividade_funcionario" name="atividade_funcionario" required>
+              <option value='Atividade Interna' selected>Atividade Interna</option>
+              <option value='Motorizado'>Motorizado</option>
+              <option value='Atividade Externa'>Atividade Externa</option>        
+            </select>                    
         </div>
             
           <div class="modal-footer">            
@@ -309,7 +293,7 @@ echo "<br><br><br>
 
 
 
-    <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="modalExcluirTitle" aria-hidden="true">
+    <div class="modal fade" id="modalFalta" tabindex="-1" role="dialog" aria-labelledby="modalExcluirTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header bg-danger">
@@ -330,6 +314,54 @@ echo "<br><br><br>
       </div>
     </div>
 
+
+    <div class="modal fade" id="modalResetar" tabindex="-1" role="dialog" aria-labelledby="modalResetarTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-danger">
+            <h3 class="modal-title text-white" id="modalPresencaLongTitle">Confirmar Reset</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body  bg-danger">
+            <h3 class="text-center text-white">Deseja resetar o registro de Atividade ou Falta?</h3>                  
+        </div>
+            
+          <div class="modal-footer bg-danger">            
+            <button id="btn_resetar_atividade" type="button" class="btn btn-success" onclick="resetarAtividade();">Confirmar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.mask.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+  <script src="../js/script.js"></script>
+    <!-- Custom styles for this template -->
+  <script>
+    $(document).ready(function(){
+
+      if (typeof(Storage) !== 'undefined') {
+        if(localStorage.getItem("matricula") == null){        
+          //alert(localStorage.getItem("nome"));
+          window.location.href = "../index.php";
+        }
+      }else {
+        alert('Utilize um destes navegadores: Google Chrome ou Mozilla Firefox.');
+      }
+
+    });
+    
+
+    
+  
+  </script>
 
 </body>
 </html>

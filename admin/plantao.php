@@ -216,6 +216,7 @@ if(isset($_REQUEST['acao'])){
 
 		$id_plantao = null;
 		$id_cadastrado = null;
+		$atividade = null;
 
 		if(isset($_REQUEST["id_plantao"])){
 			$id_plantao = $_REQUEST["id_plantao"];
@@ -224,15 +225,51 @@ if(isset($_REQUEST['acao'])){
 		if(isset($_REQUEST["id_cadastrado"])){
 			$id_cadastrado = $_REQUEST["id_cadastrado"];
 		}
+
+		if(isset($_REQUEST["atividade"])){
+			$atividade = $_REQUEST["atividade"];
+		}
 		
 		if($id_plantao != null || $id_plantao != "" || $id_cadastrado != null || $id_cadastrado != ""){
 			$plantao = new plantao();
-			$registrar_presenca = $plantao->registrarPresenca($id_plantao, $id_cadastrado);
+			$registrar_presenca = $plantao->registrarPresenca($id_plantao, $id_cadastrado, $atividade);
 		}
 
 		
 		//$presenca = $plantao->presenca($id_plantao, $id_colaboradores); //REORGANIZAR O ARRAY COM OS COLABORADORES QUE ESTAVAM PRESENTES NO PLANTÃO
 		//$registrar_presenca = true;
+
+		$retorno = "";
+		if($registrar_presenca){	
+			$retorno = "{'resultado':'true'}";					
+		}else{
+			$retorno = "{'resultado':'false'}";			
+		}
+
+		//var_dump(json_encode($retorno));
+		var_dump(json_encode($retorno));
+
+
+	}else if($acao == "resetar_atividade"){
+
+		$registrar_presenca = false;
+
+		$id_plantao = null;
+		$id_cadastrado = null;
+
+		if(isset($_REQUEST["id_plantao"])){
+			$id_plantao = $_REQUEST["id_plantao"];
+		}
+
+		if(isset($_REQUEST["id_cadastrado"])){
+			$id_cadastrado = $_REQUEST["id_cadastrado"];
+		}
+
+		
+		if($id_plantao != null || $id_plantao != "" || $id_cadastrado != null || $id_cadastrado != ""){
+			$plantao = new plantao();
+			$registrar_presenca = $plantao->resetarAtividade($id_plantao, $id_cadastrado);
+		}
 
 		$retorno = "";
 		if($registrar_presenca){	
@@ -264,10 +301,6 @@ if(isset($_REQUEST['acao'])){
 			$plantao = new plantao();
 			$registrar_falta = $plantao->registrarFalta($id_plantao, $id_cadastrado);
 		}
-
-		
-		//$presenca = $plantao->presenca($id_plantao, $id_colaboradores); //REORGANIZAR O ARRAY COM OS COLABORADORES QUE ESTAVAM PRESENTES NO PLANTÃO
-		//$registrar_presenca = true;
 
 		$retorno = "";
 		if($registrar_falta){	

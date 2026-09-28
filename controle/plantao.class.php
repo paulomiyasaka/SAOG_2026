@@ -1280,15 +1280,11 @@ class plantao extends conecta{
 				    	<td>$row->nome</td>
 				      		<td>$row->lotacao</td>				      		
 				      <td>$row->funcao</td>
-				      <td>".substr($row->telefone, 0, 4)."-".substr($row->telefone, 4, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 5)."-".substr($row->telefone, 7, 4)."</td>";
 
 				      $celular = $row->celular;
 				      $celular_tamanho = strlen($celular);
-				      if($celular_tamanho > 9){
-							echo "<td>(".substr($celular, 0, 2).") ".substr($celular, 2, 5)."-".substr($celular, 7, 4)."</td>";				      	
-				      }else{
-				      	echo "<td>".substr($celular, 0, 5)."-".substr($celular, 5, 4)."</td>";
-				      }
+				      echo "<td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
 				      
 			       
 					echo "</tr>";
@@ -1334,15 +1330,11 @@ class plantao extends conecta{
 				    	<td>$row->nome</td>
 				      <td>$row->lotacao</td>
 				      <td>$row->funcao</td>
-				      <td>".substr($row->telefone, 0, 4)."-".substr($row->telefone, 4, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 5)."-".substr($row->telefone, 7, 4)."</td>";
 				      
 				      $celular = $row->celular;
 				      $celular_tamanho = strlen($celular);
-				      if($celular_tamanho > 9){
-							echo "<td>(".substr($celular, 0, 2).") ".substr($celular, 2, 5)."-".substr($celular, 7, 4)."</td>";				      	
-				      }else{
-				      	echo "<td>".substr($celular, 0, 5)."-".substr($celular, 5, 4)."</td>";
-				      }
+				      echo "<td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
 				      
 				     $presenca = $this->verificarPresenca($id_plantao, $id_cadastrado);
 				      
@@ -1404,6 +1396,7 @@ public function verInscritosPassado($id_plantao){
 			$motorista = false;
 			$jornada = null;
 			$motorista = $data[0]->motorista;
+			$atividade = null;
 			//var_dump($data);
 			
 			$id_cadastrado = NULL;
@@ -1415,6 +1408,7 @@ public function verInscritosPassado($id_plantao){
 				$quant_pedestre = 0;
 				foreach ($resultado as $row) {
 					$id_cadastrado = $row->id_cadastrado;
+					$atividade = $row->confirmar;
 					
 					echo "<tr>
 				      <th scope=\"row\" class=\"text-center\">$i</th>";
@@ -1444,38 +1438,29 @@ public function verInscritosPassado($id_plantao){
 
 				      $presenca = $this->verificarPresenca($id_plantao, $id_cadastrado);
 				      //var_dump($presenca);
-						if($presenca[0]->presenca === "0"){
+						if($presenca[0]->presenca === 0){
 
 							
-								echo "<td colspan=\"2\">
+								echo "<td colspan=\"1\">
 								<span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Falta\">
 								<div class=\"form-check text-danger\">
 				        <i class=\"material-icons\">clear</i>
 				        </span>
-				      </div></td>";				
+				      </div></td>";		
+				      echo "<td>
+						<span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Resetar Atividade\">
+						 <a id=\"btn_resetar_atividade\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalResetar\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
+					        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-trash\" viewBox=\"0 0 16 16\">
+  <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"/>
+  <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"/>
+</svg>
+					      </div>
+					      </span></td>";		
 							
 						}else if($presenca[0]->presenca === null){
 							
-							
-					/*
-				      echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Presença\">
-				      <a id=\"btn_confirmar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" data-toggle=\"modal\" data-target=\"#modalConfirmar\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" style=\"cursor: pointer;\"><div class=\"form-check text-success\">
-			        <i class=\"material-icons\">done</i>
-				      </div></a>
-				      </span>
-				      </td>";
-
-				      
-				   echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Falta\">
-				   <a id=\"btn_cancelar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalExcluir\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
-				        <i class=\"material-icons\">clear</i>
-				      </div></a></span></td>";
-				      
-					*/
-
-
 				       echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Presença.\">
-				      <a id=\"btn_confirmar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" data-toggle=\"modal\" data-target=\"#modalInfo\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" style=\"cursor: pointer;\"><div class=\"form-check text-success\">
+				      <a id=\"btn_confirmar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" data-toggle=\"modal\" data-target=\"#modalPresenca\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" style=\"cursor: pointer;\"><div class=\"form-check text-success\">
 			        <i class=\"material-icons\">done</i>
 				      </div></a>
 				      </span>
@@ -1483,24 +1468,32 @@ public function verInscritosPassado($id_plantao){
 
 				      
 				   echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Falta.\">
-				   <a id=\"btn_cancelar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalInfo\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
+				   <a id=\"btn_cancelar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalFalta\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
 				        <i class=\"material-icons\">clear</i>
 				      </div></a></span></td>";
 
 
-						}else if($presenca[0]->presenca === "1"){
+						}else if($presenca[0]->presenca === 1){
 							echo "<span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Presente\">";
-						echo "<td colspan=\"2\">
+							echo "<td colspan=\"1\">
 						<span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Presente\">
 						<div class=\"form-check text-primary\">
-					        <i class=\"material-icons\">done</i>
+					        ".$atividade."
 					      </div>
 					      </span></td>";
+							
+						echo "<td>
+						<span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Resetar Atividade\">
+						 <a id=\"btn_resetar_atividade\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalResetar\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
+					        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" class=\"bi bi-trash\" viewBox=\"0 0 16 16\">
+  <path d=\"M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z\"/>
+  <path d=\"M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z\"/>
+</svg>
+					      </div>
+					      </span></td>";
+					      
 
-
-						}
-
-			      
+						}			      
 				       
 					echo "</tr>";
 				    $i++;
@@ -1567,14 +1560,17 @@ public function verInscritosPassado($id_plantao){
 				    	<td>$row->nome</td>
 				      <td>$row->lotacao</td>
 				      <td>$row->funcao</td>
-				      <td>".substr($row->telefone, 0, 4)."-".substr($row->telefone, 4, 4)."</td>
-				      <td>(61) ".substr($row->celular, 0, 5)."-".substr($row->celular, 5, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 5)."-".substr($row->telefone, 7, 4)."</td>
+				      <td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
+					  
 
 				      //<td>(".substr($row->celular, 0, 2).") ".substr($row->celular, 2, 5)."-".substr($row->celular, 7, 4)."</td>";
 
 				      
 				     $presenca = $this->verificarPresenca($id_plantao, $id_cadastrado);
-				      //var_dump($presenca);
+				      var_dump($presenca);
+				      exit();
+				     
 						if($presenca[0]->presenca === "0"){
 
 							
@@ -1590,7 +1586,7 @@ public function verInscritosPassado($id_plantao){
 							
 
 				      echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Presença\">
-				      <a id=\"btn_confirmar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" data-toggle=\"modal\" data-target=\"#modalConfirmar\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" style=\"cursor: pointer;\"><div class=\"form-check text-success\">
+				      <a id=\"btn_confirmar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" data-toggle=\"modal\" data-target=\"#modalPresenca\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" style=\"cursor: pointer;\"><div class=\"form-check text-success\">
 			        <i class=\"material-icons\">done</i>
 				      </div></a>
 				      </span>
@@ -1598,7 +1594,7 @@ public function verInscritosPassado($id_plantao){
 
 				      
 				   echo "<td><span class=\"d-inline-block\" tabindex=\"0\" data-toggle=\"tooltip\" title=\"Registrar Falta\">
-				   <a id=\"btn_cancelar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalExcluir\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
+				   <a id=\"btn_cancelar_inscricao\" id_plantao=\"".$id_plantao."\" cadastro=\"".$id_cadastrado."\" onclick=\"presencaPlantao(".$id_plantao.", ".$id_cadastrado.");\" data-toggle=\"modal\" data-target=\"#modalFalta\" style=\"cursor: pointer;\" ><div class=\"form-check text-danger\">
 				        <i class=\"material-icons\">clear</i>
 				      </div></a></span></td>";
 				      
@@ -1618,9 +1614,7 @@ public function verInscritosPassado($id_plantao){
 					echo "</tr>";
 				    $i++;
 
-				}
-
-				
+				}			
 
 
 				echo "<tr class=\"table-success\">
@@ -1647,22 +1641,14 @@ public function verInscritosPassado($id_plantao){
 
 		}else{
 			return false;
-		}
-
-		
+		}		
 
 	}
 
 
-
-
-
-
-
-
 	public function verificarPresenca($id_plantao, $id_cadastrado){
 
-		$sql = "SELECT presenca FROM cadastrados WHERE id_plantao = :id_plantao AND id_cadastrado = :id_cadastrado";
+		$sql = "SELECT presenca FROM cadastrados WHERE id_plantao = :id_plantao AND id_cadastrado = :id_cadastrado ORDER BY id_plantao DESC LIMIT 1";
 		$dados = array(":id_plantao" => $id_plantao, ":id_cadastrado" => $id_cadastrado);
 		$query = parent::executarSQL($sql, $dados);
 		$resultado = $query->fetchAll(PDO::FETCH_OBJ);
@@ -1672,10 +1658,30 @@ public function verInscritosPassado($id_plantao){
 
 
 
-	public function registrarPresenca($id_plantao, $id_cadastrado){
+	public function registrarPresenca($id_plantao, $id_cadastrado, $atividade){
 
-		$sql = "UPDATE cadastrados SET presenca = :presenca WHERE id_plantao = :id_plantao AND id_cadastrado = :id_cadastrado";
-		$dados = array(":presenca" => 1, ":id_plantao" => $id_plantao, ":id_cadastrado" => $id_cadastrado);
+		$sql = "UPDATE cadastrados SET presenca = :presenca, confirmar_inscricao = :confirmar_inscricao WHERE id_plantao = :id_plantao AND id_cadastrado = :id_cadastrado";
+		$dados = array(":presenca" => 1, ":confirmar_inscricao" => $atividade, ":id_plantao" => $id_plantao, ":id_cadastrado" => $id_cadastrado);
+
+		$atualizou = false;
+
+		$query = parent::executarSQL($sql, $dados);
+		if($query->rowCount() > 0){
+			$atualizou = true;
+		}
+
+		return $atualizou;
+
+
+	}
+
+	public function resetarAtividade($id_plantao, $id_cadastrado){
+
+		$presenca = null;
+		$atividade = null;
+
+		$sql = "UPDATE cadastrados SET presenca = :presenca, confirmar_inscricao = :confirmar_inscricao WHERE id_plantao = :id_plantao AND id_cadastrado = :id_cadastrado";
+		$dados = array(":presenca" => $presenca, ":confirmar_inscricao" => $atividade, ":id_plantao" => $id_plantao, ":id_cadastrado" => $id_cadastrado);
 
 		$atualizou = false;
 
