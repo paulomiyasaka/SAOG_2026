@@ -104,12 +104,15 @@ include "barra_cima.php";
 </div>
 
 <br>
+<!--
 <div class="row justify-content-center">
   <div class="col-6">
     <h3 class="text-center"><?php echo ucwords($msg_trabalho); ?></h3>
   </div>  
   </div>  
- 
+-->
+
+
 <br><br>  
 <div class="row justify-content-center">
   <?php

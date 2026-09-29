@@ -128,12 +128,23 @@ include "barra_cima.php";
 </div>
 
 <br>
+<!--
 <div class="row justify-content-center">
   <div class="col-6">
     <h3 class="text-center"><?php echo ucwords($msg_trabalho); ?></h3>
   </div>  
   </div>  
- 
+-->
+
+  <!-- Botão Exportar Excel -->
+<div class="row justify-content-end mb-3">
+  <div class="col-auto">
+    <a href="exportar_plantao_excel.php?p=<?php echo $_GET['p']; ?>" class="btn btn-success">
+       Exportar em Excel
+    </a>
+  </div>
+</div>
+
 <br><br>  
 <div class="row justify-content-center">
   <?php

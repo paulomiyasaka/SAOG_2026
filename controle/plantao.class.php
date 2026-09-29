@@ -1280,7 +1280,7 @@ class plantao extends conecta{
 				    	<td>$row->nome</td>
 				      		<td>$row->lotacao</td>				      		
 				      <td>$row->funcao</td>
-				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 5)."-".substr($row->telefone, 7, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 4)."-".substr($row->telefone, 6, 4)."</td>";
 
 				      $celular = $row->celular;
 				      $celular_tamanho = strlen($celular);
@@ -1330,7 +1330,7 @@ class plantao extends conecta{
 				    	<td>$row->nome</td>
 				      <td>$row->lotacao</td>
 				      <td>$row->funcao</td>
-				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 5)."-".substr($row->telefone, 7, 4)."</td>";
+				      <td>(".substr($row->telefone, 0, 2).") ".substr($row->telefone, 2, 4)."-".substr($row->telefone,6, 4)."</td>";
 				      
 				      $celular = $row->celular;
 				      $celular_tamanho = strlen($celular);
@@ -1367,6 +1367,43 @@ class plantao extends conecta{
 		}
 
 		
+
+	}
+
+
+	public function inscritosPlantaoExcel($id_plantao){
+
+		$sql = "SELECT 
+		    cad.id_cadastrado, 
+		    cad.matricula,
+		    cad.motorista,
+		    CASE
+			  WHEN cad.motorista = 1 THEN 'Motorista'
+			  ELSE 'Auxiliar'
+			END AS opcao_atividade,			 
+		    colab.nome AS nome_funcionario,
+		    colab.lotacao,
+		    colab.telefone,
+		    colab.celular, 
+		    p.turno_inicio,
+		    p.turno_final,
+		    u.nome AS unidade_nome     
+			FROM cadastrados AS cad 
+			INNER JOIN colaboradores AS colab 
+			    ON cad.matricula = colab.matricula 
+			INNER JOIN plantao AS p 
+			    ON cad.id_plantao = p.id_plantao 
+			INNER JOIN unidades AS u 
+			    ON p.id_unidade = u.id_unidade 
+			WHERE cad.id_plantao = :id_plantao 
+			ORDER BY colab.nome ASC";
+		$dados = array(":id_plantao" => $id_plantao);
+
+		$query = conecta::executarSQL($sql, $dados);
+		$resultado = $query->fetchAll(PDO::FETCH_OBJ);
+		return $resultado;
+
+
 
 	}
 

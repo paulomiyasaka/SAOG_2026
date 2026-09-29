@@ -59,14 +59,7 @@ include "barra_cima.php";
 			//$plantao->botaoCadastrarPlantao();
 		?>
 
-	<!-- Botão Exportar Excel -->
-<div class="row justify-content-end mb-3">
-  <div class="col-auto">
-    <a href="exportar_plantao_excel.php?p=<?php echo $_GET['p']; ?>" class="btn btn-success">
-      <i class="fa fa-file-excel-o"></i> Exportar em Excel
-    </a>
-  </div>
-</div>
+
 
 
 		<?php 

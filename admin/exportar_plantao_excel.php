@@ -1,67 +1,65 @@
 <?php
-require '../vendor/autoload.php'; // Caminho do autoloader do Composer
+// ATENÇÃO: NENHUM caractere, espaço ou linha em branco pode existir antes desta tag <?php
+
+// Opcional: Para depuração, desative a exibição direta de erros na tela
+// e verifique os logs do servidor se necessário
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+require '../vendor/autoload.php'; // Ajuste o caminho do autoloader se necessário
+require_once '../controle/plantao.class.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
-// Verificação simples de parâmetro
+// Validar se o parâmetro foi passado
 if (!isset($_GET['p']) || empty($_GET['p'])) {
-    die("Plantão não especificado.");
+    die("Erro: Parâmetro inválido.");
 }
 
-$id_plantao = base64_decode($_GET['p']);
+$id_plantao = (int) base64_decode($_GET['p']);
 
 // ------------------------------------------------------------------
-// 1. CONSULTA AO BANCO DE DADOS (Ajuste para suas tabelas/conexão)
+// 1. BUSCA DOS DADOS
 // ------------------------------------------------------------------
-// Exemplo com PDO:
-// require_once '../conexao.php';
-// $stmt = $pdo->prepare("SELECT ... WHERE id_plantao = :id_plantao");
-// $stmt->execute([':id_plantao' => $id_plantao]);
-// $dados_plantao = $stmt->fetch();
-// $inscritos = $stmt_inscritos->fetchAll();
+$plantao = new Plantao();
+$inscritos = $plantao->inscritosPlantaoExcel($id_plantao);
 
-// Dados de exemplo baseados na sua página:
-$titulo_unidade = "Plantão no CEE TAGUATINGA";
-$data_horario   = "Domingo, 20/09/2026 de 08:00:00 às 16:00:00";
-$atividade      = "Atividade De Distribuicao";
+if (empty($inscritos)) {
+    die("Nenhum inscrito encontrado para este plantão.");
+}
 
-// Exemplo de array vindo do BD:
-$registros = [
-    [
-        'matricula' => '81363826',
-        'nome'      => 'PAULO RODRIGUES MIYASAKA',
-        'lotacao'   => 'CS/DIOPE/SUPLO/DELOG',
-        'funcao'    => 'ANALISTA V',
-        'telefone'  => '(61) 2141-9604',
-        'celular'   => '(61) 98577-1427',
-        'escolha'   => 'Distribuição',
-        'presenca'  => 'Pendente'
-    ]
-];
+$primeiroRegistro = $inscritos[0];
+
+$dataInicio = !empty($primeiroRegistro->turno_inicio) 
+    ? date('d/m/Y H:i:s', strtotime($primeiroRegistro->turno_inicio)) 
+    : 'Data não informada';
+
+$nomeUnidade = isset($primeiroRegistro->unidade_nome) 
+    ? $primeiroRegistro->unidade_nome 
+    : (isset($primeiroRegistro->nome) ? $primeiroRegistro->nome : 'Unidade não informada');
 
 // ------------------------------------------------------------------
-// 2. MONTAGEM DA PLANILHA COM PHPSPREADSHEET
+// 2. MONTAGEM DA PLANILHA EXCEL
 // ------------------------------------------------------------------
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
-$sheet->setTitle('Presença Plantão');
-
-// Exibir linhas de grade no Excel
+$sheet->setTitle('Inscritos');
 $sheet->setShowGridLines(true);
 
-// Estilos Reutilizáveis
+// Estilos
 $styleHeaderTitle = [
-    'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 14],
+    'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF'], 'size' => 13],
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => '1F4E78']],
     'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER, 'vertical' => Alignment::VERTICAL_CENTER]
 ];
 
 $styleSubtitle = [
-    'font' => ['italic' => true, 'color' => ['rgb' => '1F4E78'], 'size' => 11],
+    'font' => ['italic' => true, 'color' => ['rgb' => '1F4E78'], 'size' => 10],
     'fill' => ['fillType' => Fill::FILL_SOLID, 'startColor' => ['rgb' => 'D9E1F2']],
     'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER, 'vertical' => Alignment::VERTICAL_CENTER]
 ];
@@ -84,69 +82,83 @@ $styleTotalRow = [
     'borders' => ['allBorders' => ['borderStyle' => Border::BORDER_THIN, 'color' => ['rgb' => 'D9D9D9']]]
 ];
 
-// Cabeçalho / Título do Relatório
-$sheet->mergeCells('A1:I1');
-$sheet->setCellValue('A1', 'SAOG - ' . $titulo_unidade);
-$sheet->getStyle('A1:I1')->applyFromArray($styleHeaderTitle);
-$sheet->getRowDimension(1)->setRowHeight(35);
+// Cabeçalho Principal (Linha 1)
+$sheet->mergeCells('A1:H1');
+$sheet->setCellValue('A1', 'SAOG - Plantão no ' . mb_strtoupper($nomeUnidade, 'UTF-8'));
+$sheet->getStyle('A1:H1')->applyFromArray($styleHeaderTitle);
+$sheet->getRowDimension(1)->setRowHeight(32);
 
-$sheet->mergeCells('A2:I2');
-$sheet->setCellValue('A2', $data_horario . ' | ' . $atividade);
-$sheet->getStyle('A2:I2')->applyFromArray($styleSubtitle);
-$sheet->getRowDimension(2)->setRowHeight(25);
+// Subtítulo (Linha 2)
+$sheet->mergeCells('A2:H2');
+$sheet->setCellValue('A2', 'Início do Turno: ' . $dataInicio);
+$sheet->getStyle('A2:H2')->applyFromArray($styleSubtitle);
+$sheet->getRowDimension(2)->setRowHeight(22);
 
-// Colunas da Tabela
-$headers = ['#', 'Escolha', 'Matrícula', 'Nome', 'Lotação', 'Função', 'Telefone', 'Celular', 'Presença'];
+// Cabeçalhos (Linha 4)
+$headers = ['#', 'Matrícula', 'Nome Colaborador', 'Lotação', 'Início do Turno', 'Opção Atividade', 'Telefone', 'Celular'];
 $sheet->fromArray($headers, NULL, 'A4');
-$sheet->getStyle('A4:I4')->applyFromArray($styleTableHeader);
-$sheet->getRowDimension(4)->setRowHeight(26);
+$sheet->getStyle('A4:H4')->applyFromArray($styleTableHeader);
+$sheet->getRowDimension(4)->setRowHeight(25);
 
-// Preenchimento dos dados
+// ------------------------------------------------------------------
+// 3. LOOP NOS REGISTROS DO SQL
+// ------------------------------------------------------------------
 $row = 5;
-$i = 1;
-
-foreach ($registros as $reg) {
-    $sheet->setCellValue('A' . $row, $i);
-    $sheet->setCellValue('B' . $row, $reg['escolha']);
-    $sheet->setCellValueExplicit('C' . $row, $reg['matricula'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
-    $sheet->setCellValue('D' . $row, $reg['nome']);
-    $sheet->setCellValue('E' . $row, $reg['lotacao']);
-    $sheet->setCellValue('F' . $row, $reg['funcao']);
-    $sheet->setCellValue('G' . $row, $reg['telefone']);
-    $sheet->setCellValue('H' . $row, $reg['celular']);
-    $sheet->setCellValue('I' . $row, $reg['presenca']);
-
-    $sheet->getStyle("A{$row}:I{$row}")->applyFromArray($styleDataRow);
+$contador = 1;
+$turnoFormatado = '';
+foreach ($inscritos as $item) {
+    $sheet->setCellValue('A' . $row, $contador);
+    $sheet->setCellValueExplicit('B' . $row, (string) $item->matricula, DataType::TYPE_STRING);
+    $sheet->setCellValue('C' . $row, mb_strtoupper($item->nome_funcionario, 'UTF-8'));
+    $sheet->setCellValue('D' . $row, mb_strtoupper($item->lotacao, 'UTF-8'));
     
-    // Alinhamentos específicos
+    $turnoFormatado = !empty($item->turno_inicio) ? date('d/m/Y H:i:s', strtotime($item->turno_inicio)) : '-';
+    $sheet->setCellValue('E' . $row, $turnoFormatado);
+    $sheet->setCellValue('F' . $row, mb_strtoupper($item->opcao_atividade, 'UTF-8'));
+    $sheet->setCellValueExplicit('G' . $row, (string) $item->telefone, DataType::TYPE_STRING);
+    $sheet->setCellValueExplicit('H' . $row, (string) $item->celular, DataType::TYPE_STRING);
+
+    $sheet->getStyle("A{$row}:H{$row}")->applyFromArray($styleDataRow);
     $sheet->getStyle("A{$row}:C{$row}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-    $sheet->getStyle("G{$row}:I{$row}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-    
-    $sheet->getRowDimension($row)->setRowHeight(22);
+    $sheet->getStyle("G{$row}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+    $sheet->getRowDimension($row)->setRowHeight(20);
     $row++;
-    $i++;
+    $contador++;
 }
 
 // Linha de Total
-$sheet->setCellValue('A' . $row, 'Total:');
-$sheet->setCellValue('B' . $row, count($registros));
-$sheet->getStyle("A{$row}:I{$row}")->applyFromArray($styleTotalRow);
+$sheet->setCellValue('A' . $row, 'Total de Inscritos:');
+$sheet->setCellValue('B' . $row, count($inscritos));
+$sheet->getStyle("A{$row}:H{$row}")->applyFromArray($styleTotalRow);
 $sheet->getStyle("A{$row}:B{$row}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 $sheet->getRowDimension($row)->setRowHeight(24);
 
-// Auto-ajuste de largura das colunas
-foreach (range('A', 'I') as $col) {
+// Auto-dimensionar colunas
+foreach (range('A', 'H') as $col) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }
 
 // ------------------------------------------------------------------
-// 3. DOWNLOAD DO ARQUIVO .XLSX
+// 4. DOWNLOAD SEGURO DO ARQUIVO XLSX (Evita arquivo corrompido)
 // ------------------------------------------------------------------
-$filename = 'Plantao_Presenca_' . date('Y-m-d_H-i') . '.xlsx';
+
+// LIMPEZA CRÍTICA: Descarta qualquer buffer de saída ativo (evita espaços/warnings no arquivo)
+if (ob_get_length()) {
+    ob_end_clean();
+}
+
+$unidadeSanitizada = preg_replace('/[^a-zA-Z0-9_-]/', '_', $nomeUnidade);
+$filename = 'Plantao_Inscritos_' . $unidadeSanitizada . '_' . $turnoFormatado . '.xlsx';
 
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment;filename="' . $filename . '"');
 header('Cache-Control: max-age=0');
+header('Cache-Control: max-age=1'); // Solução para IE/Edge antigos
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Data no passado
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+header('Cache-Control: cache, must-revalidate');
+header('Pragma: public');
 
 $writer = new Xlsx($spreadsheet);
 $writer->save('php://output');
