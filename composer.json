@@ -6,5 +6,7 @@
             "Saog\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "phpoffice/phpspreadsheet": "^5.8"
+    }
 }
